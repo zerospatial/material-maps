@@ -1,3 +1,16 @@
 ---
 layout: map
+basemap:
+center:
+zoom:
+layers:
+  name: Layer 1
+    vectortype: point
+    #topojson, geojson, MapServer, FeatureServer
+    filetype: geojson
+    url: assets/data/point.geojson
+    color: red
+    popupfields: name
+    fit-to-layer:
+  name: Layer 2
 ---

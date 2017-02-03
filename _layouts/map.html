@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
-{% if page.framework == 'calcite' %}{%else%}
-{%include material/material-map.html%}
+{% if page.layers %}
+{% for layer in page.layers %}
+{%endfor%}
 {%endif%}
