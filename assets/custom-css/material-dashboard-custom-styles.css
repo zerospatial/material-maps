@@ -1,0 +1,10 @@
+.is-focused .mdl-textfield__input {
+  min-width: 200px;
+}
+.demo-content {
+  max-width: 1344px;
+}
+.mdl-card--square {
+  width: 320px;
+  height: 320px;
+}
