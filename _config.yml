@@ -1,1 +1,4 @@
 title: Jekyll Maps
+
+#Jekyll ignores folders with underscores unless otherwise noted
+include: ["_maps"]
