@@ -4,3 +4,10 @@ title: Jekyll Maps
 collections:
   maps:
     output: true
+    
+defaults:
+  - scope:
+      path: ""
+      type: maps
+    values:
+      layout: material-maps
