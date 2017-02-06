@@ -1,7 +1,15 @@
 ---
-layout: material-dashbaord
+layout: material-dashboard
 ---
+<div id="map" style="position:relative;height:100%;width:100%;margin-left:240px;"></div>
+<script>
+var map = new L.map('map', {
+  center: [39,-82],
+  zoom: 10
+});
 {% if page.layers %}
 {% for layer in page.layers %}
+var {{layer.name}} = omnivore.{{layer.filetype}}('{{layer.url}}').addTo(map);
 {%endfor%}
 {%endif%}
+</script>

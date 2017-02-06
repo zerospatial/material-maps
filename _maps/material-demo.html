@@ -3,14 +3,14 @@ title: This is a Leaflet Map
 basemap:
 center:
 zoom:
+image: image-01.jpg
 layers:
-  name: Layer 1
-    vectortype: point
-    #topojson, geojson, MapServer, FeatureServer
+  - name: linelayer
+    alias: Line Layer
+    vectortype: line
     filetype: geojson
-    url: assets/data/point.geojson
+    url: https://www.ovrdc.org/apps/assets/data/sidewalk-study/sidewalks_wch_12_02_16.geojson
     color: red
     popupfields: name
-    fit-to-layer:
-  name: Layer 2
+    fit-to-layer: true
 ---

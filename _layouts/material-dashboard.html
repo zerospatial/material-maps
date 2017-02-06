@@ -11,19 +11,19 @@
     {% if site.favicon %}
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="192x192" href="images/android-desktop.png">
+    <link rel="icon" sizes="192x192" href="/images/android-desktop.png">
 
     <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Material Design Lite">
-    <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+    <link rel="apple-touch-icon-precomposed" href="/images/ios-desktop.png">
 
     <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileImage" content="/images/touch/ms-touch-icon-144x144-precomposed.png">
     <meta name="msapplication-TileColor" content="#3372DF">
 
-    <link rel="shortcut icon" href="images/favicon.png">
+    <link rel="shortcut icon" href="/images/favicon.png">
     {%endif%}
 
     {%if page.framework == 'calcite'%}
@@ -32,8 +32,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!--see https://getmdl.io/customize/ for many other color themes-->
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-blue.min.css">
-    <link rel="stylesheet" href="assets/frameworks/material/dashboard/styles.css">
-    <link rel="stylesheet" href="assets/custom-css/material-dashboard-custom-styles.css">
+    <link rel="stylesheet" href="/assets/frameworks/material/dashboard/styles.css">
+    <link rel="stylesheet" href="/assets/custom-css/material-dashboard-custom-styles.css">
+    {%endif%}
+    {% if page.layout == 'material-maps'%}
+    <!--Leaflet 1.0.3 updated 1/26/2017-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    <!-- Leaflet Omnivore Plugin GeoJson KML Etc -->
+    <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
     {%endif%}
     <style>
     </style>
