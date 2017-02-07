@@ -1,1 +1,1 @@
-An experiment to use Jekyll for pushing out web maps and and web map gallery.
+An experiment to use Jekyll for pushing out web maps and and a web map gallery.
