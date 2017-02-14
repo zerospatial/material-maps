@@ -9,7 +9,7 @@
   height: 600px;
 }
 .demo-updates .mdl-card__title {
-  min-height: 200px;
+  height: 200px;
   background-image: url(images/dog.png);
   background-size: cover;
   background-repeat: no-repeat;
