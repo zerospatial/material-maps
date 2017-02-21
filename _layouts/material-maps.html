@@ -1,15 +1,22 @@
 ---
 layout: material-dashboard
 ---
-<div id="map" style="position:relative;height:100%;width:100%;margin-left:240px;"></div>
+<div id="map">
+</div>
 <script>
 var map = new L.map('map', {
-  center: [39,-82],
-  zoom: 10
+  center: {% if page.map-options.center %}{{page.map-options.center}}{% else %}[39,-82]{% endif %},
+  zoom: {% if page.map-options.zoom %}{{page.map-options.zoom}}{% else %}10{% endif %},
+  zoomControl: false
 });
 {% if page.layers %}
 {% for layer in page.layers %}
-var {{layer.name}} = omnivore.{{layer.filetype}}('{{layer.url}}').addTo(map);
+{% capture layername %}{{ layer.name | replace "-", "" }}{% endcapture %}
+var {{layername}} = omnivore.{{layer.filetype}}('{{layer.url}}').addTo(map);//{{layer.fitBounds}}
+{% if layer.fitBounds == true %}{{layer.name}}.on('ready', function() {
+  map.fitBounds({{layer.name}}.getBounds())
+});{% endif %}
 {%endfor%}
 {%endif%}
 </script>
+{{content}}

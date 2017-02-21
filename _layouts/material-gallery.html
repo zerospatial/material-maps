@@ -1,22 +1,20 @@
 ---
 layout: material-dashboard
 ---
-<main class="mdl-layout__content mdl-color--grey-100">
-  <div class="mdl-grid demo-content">
-    {%for map in site.maps%}
-    <div class="demo-updates mdl-card mdl-card--square mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
-      <div class="mdl-card__title mdl-card--expand mdl-color--teal-300" style="background-image:url({{site.baseurl}}/jekyll-maps/images/{{map.image}})">
-      </div>
-      <div class="mdl-card__actions">
-        <span class="mdl-card__title-text">{{map.title}}</span>
-      </div>
-      <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-        Non dolore elit adipisicing ea reprehenderit consectetur culpa.
-      </div>
-      <div class="mdl-card__actions mdl-card--border">
-        <a href="{{map.url}}" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>
-      </div>
+<div class="mdl-grid demo-content">
+  {%for map in site.maps%}
+  <div class="demo-updates mdl-card mdl-card--square mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet app{% if map.tags %}{% for tag in map.tags %} {{ tag }}{% endfor %}{% endif %}">
+    <div class="mdl-card__title mdl-card--expand mdl-color--teal-300" style="background-image:url(maps/images/{{map.image}})">
     </div>
-    {%endfor%}
+    <div class="mdl-card__actions">
+      <span class="mdl-card__title-text">{{map.title}}</span>
+    </div>
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+      Non dolore elit adipisicing ea reprehenderit consectetur culpa.
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a href="{{map.url}}" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>
+    </div>
   </div>
-</main>
+  {%endfor%}
+</div>

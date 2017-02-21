@@ -1,30 +1,3 @@
----
-title: This is a Leaflet Map
-basemap:
-image: image-01.jpg
-tags: recreation
-map-options:
-  center: "[39, -83.4]"
-  zoom: 14
-layers:
-  - name: linelayer
-    alias: Line Layer
-    vectortype: line
-    filetype: geojson
-    url: https://www.ovrdc.org/apps/assets/data/sidewalk-study/sidewalks_wch_12_02_16.geojson
-    color: red
-    popupfields: name
-    fitBounds: true
----
-<script>
-'use strict';
-var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-	maxZoom: 19,
-	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
-
-//L.mapbox.accessToken = "pk.eyJ1IjoicmV5ZW10bSIsImEiOiJCTHUxSVZ3In0.Q-qbg_jG0JcT6bfBeiwXQg";
-
 L.Control.include({
   defaultMaterialOptions: {
     fab: true,
@@ -376,25 +349,3 @@ L.Control.MaterialLayers = L.Control.Layers.extend({
     }
   },
 });*/
-
-// =================================
-var materialOptions = {
-  fab: true,
-  miniFab: true,
-  rippleEffect: true,
-  toolTips: false,
-  color: 'primary'
-}
-// Material zoom control:
-var materialZoomControl = new L.Control.MaterialZoom({position: 'topright' }).addTo(map);
-
-// Material fullscreen control:
-var materialFullscreen = new L.Control.MaterialFullscreen({position: 'topright' }).addTo(map);
-
-  // Material layer control:
-/*  var materialLayerControl = new L.Control.MaterialLayers(layers, null, {position: 'bottomright', materialOptions: materialOptions}).addTo(map);*/
-
-// Search location (geocode) control
-/*var materialGeocodeControl =  new L.Control.MaterialGeocoderControl('mapbox.places', {position: 'topleft', autoComplete: true}).addTo(map);*/
-
-</script>

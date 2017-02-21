@@ -1,18 +1,52 @@
-.is-focused .mdl-textfield__input {
-  min-width: 180px;
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+#map {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+#map-sidebar--link-menu a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #304ffe;
+  font-weight: 500;
+}
+.leaflet-pane img {
+  vertical-align: inherit;
+}
+.demo-layout .mdl-layout__header .mdl-layout__drawer-button {
+  color: #212121 !important;
+}
+.demo-header {
+  display: none;
+}
+.demo-layout .demo-navigation .mdl-navigation__link:hover {
+  background-color: #e0e0e0;
 }
 .demo-content {
   max-width: 1344px;
 }
 .mdl-card--square {
   width: 320px;
-  height: 600px;
 }
 .demo-updates .mdl-card__title {
-  height: 200px;
+  min-height: 150px;
   background-image: url(images/dog.png);
   background-size: cover;
   background-repeat: no-repeat;
+}
+@media screen and (max-width: 1024px) {
+  #map {
+    width: 100%;
+  }
+  .demo-header {
+    display: block;
+  }
 }
 @media screen and (max-width: 1600px) and (min-width: 1344px) {
   .mdl-card--square {

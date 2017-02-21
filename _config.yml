@@ -1,10 +1,12 @@
+baseurl: https://getbounds.com/jekyll-maps
 title: Jekyll Maps
+
 
 #Jekyll ignores folders with underscores unless otherwise noted
 collections:
   maps:
     output: true
-    
+
 defaults:
   - scope:
       path: ""
