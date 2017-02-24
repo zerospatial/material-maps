@@ -1,14 +1,14 @@
 /*material controls*/
-/*.mdl-menu--bottom-right {
+.mdl-menu--bottom-right {
   margin-top: -40px !important;
   margin-left: -50px !important;
   margin-right: 50px !important;
-}*/
-/*.mdl-menu--bottom-left {
+}
+.mdl-menu--bottom-left {
   margin-top: -40px !important;
   margin-left: 50px !important;
   margin-right: -50px !important;
-}*/
+}
 .mdl-menu--top-left {
   margin-top: 40px !important;
   margin-bottom: -40px !important;
@@ -29,6 +29,9 @@
 .leaflet-bar-mdl.leaflet-control button {
   margin-bottom: 10px;/*16px;*/
   display: block;
+}
+.leaflet-control-layers-mdl .mdl-checkbox {
+  display: inline-flex;
 }
 /*@media (min-width: 840px) {
   .leaflet-bar-mdl.leaflet-control {
