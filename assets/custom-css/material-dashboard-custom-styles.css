@@ -16,6 +16,9 @@ html, body {
   color: #304ffe;
   font-weight: 500;
 }
+.demo-avatar-dropdown .demo-drawer .mdl-menu__container {
+  z-index: auto;
+}
 .leaflet-pane img {
   vertical-align: inherit;
 }

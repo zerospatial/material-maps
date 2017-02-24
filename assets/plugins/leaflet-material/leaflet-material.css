@@ -1,21 +1,21 @@
 /*material controls*/
-.mdl-menu--bottom-right {
+.leaflet-control-container .mdl-menu--bottom-right {
   margin-top: -40px !important;
   margin-left: -50px !important;
   margin-right: 50px !important;
 }
-.mdl-menu--bottom-left {
+.leaflet-control-container .mdl-menu--bottom-left {
   margin-top: -40px !important;
   margin-left: 50px !important;
   margin-right: -50px !important;
 }
-.mdl-menu--top-left {
+.leaflet-control-container .mdl-menu--top-left {
   margin-top: 40px !important;
   margin-bottom: -40px !important;
   margin-left: 50px !important;
   margin-right: -50px !important;
 }
-.mdl-menu--top-right {
+.leaflet-control-container .mdl-menu--top-right {
   margin-top: 40px !important;
   margin-bottom: -40px !important;
   margin-left: -50px !important;
