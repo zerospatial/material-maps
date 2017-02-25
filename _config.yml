@@ -1,4 +1,5 @@
-baseurl: jekyll-maps
+baseurl: /jekyll-maps
+url: https://getbounds.com
 title: Jekyll Maps
 
 
