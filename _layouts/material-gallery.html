@@ -13,7 +13,7 @@ layout: material-dashboard
       Non dolore elit adipisicing ea reprehenderit consectetur culpa.
     </div>
     <div class="mdl-card__actions mdl-card--border">
-      <a href="{{map.url}}" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>
+      <a href="{{map.url | prepend:site.baseurl}}" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>
     </div>
   </div>
   {%endfor%}
