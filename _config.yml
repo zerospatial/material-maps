@@ -13,4 +13,4 @@ defaults:
       path: ""
       type: maps
     values:
-      layout: material-maps
+      layout: map

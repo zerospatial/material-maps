@@ -1,5 +1,5 @@
 <!doctype html>
-{% if page.framework == 'calcite' %}{% else %}{% include material/material-license.html %}{% endif %}
+{% if page.framework == 'calcite' %}{% else %}{% include material-license.html %}{% endif %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!--see https://getmdl.io/customize/ for many other color themes-->
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-red.min.css">
-    <link rel="stylesheet" href="{{site.baseurl}}/assets/frameworks/material/dashboard/styles.css">
+    <link rel="stylesheet" href="{{site.baseurl}}/assets/material-dashboard/styles.css">
     <link rel="stylesheet" href="{{site.baseurl}}/assets/custom-css/material-dashboard-custom-styles.css">
     {%endif%}
     {% if page.layout == 'material-maps'%}
@@ -53,7 +53,7 @@
   </head>
     <body>
       <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-        {% include material/material-nav.html%}
+        {% include top-nav.html%}
         <main class="mdl-layout__content mdl-color--grey-100">
           {{content}}
         </main>
