@@ -82,7 +82,7 @@ layerControl.addBaseLayer(osm, "Streets");
 layerControl.addBaseLayer(dark, "Contrast");
 {% if page.layers %}
 {% for layer in page.layers %}{% assign words = layer.name | split: ' ' %}{% capture layername %}{% for word in words %}{{ word | capitalize }}{% endfor %}{%endcapture%}
-var {{layername}} = omnivore.{{layer.filetype}}('{{site.baseurl}}/{{layer.url}}').addTo(map);//{{layer.fitBounds}}
+var {{layername}} = omnivore.{{layer.filetype}}('{% if layer.local != false %}{{site.baseurl}}/{% endif %}{{layer.url}}').addTo(map);//{{layer.fitBounds}}
 {% if layer.fitBounds == true %}{{layername}}.on('ready', function() {
   map.fitBounds({{layername}}.getBounds())
 });{% endif %}
