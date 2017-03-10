@@ -1,34 +1,6 @@
 ---
-layout: material-dashboard
+layout: default
 ---
-<style>
-.leaflet-control-search .search-cancel {
-    height: 20px;
-    position: relative;
-    right: 0px;
-    margin-top: 10px;
-    filter: alpha(opacity=80);
-    float: right;
-}
-.leaflet-control-search .search-input {
-    display: block;
-    border: none;
-    border-radius: 0;
-    height: 26px;
-    padding: 5px 10px;
-    font-size: 16px;
-}
-.search-button {
-  display: none!important;
-}
-.leaflet-container .leaflet-control-search {
-  border-radius: 0;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
-}
-input:focus, textarea:focus {
-    outline: none;
-}
-</style>
 <div id="map">
 </div>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -58,7 +30,7 @@ var materialOptions = {
   fab: true,
   miniFab: true,
   rippleEffect: true,
-  toolTips: true,
+  toolTips: false,
   color: 'primary'
 }
 
@@ -76,14 +48,19 @@ var searchControl = new L.Control.Search({
   collapsed: false
 }).addTo(map);
 
+searchControl.on("search:locationfound", function() {
+  console.log('t');
+  searchControl.collapse()
+})
+
 // Material layer control:
-var layerControl = new L.Control.MaterialLayers(null, null, {position: 'topleft', materialOptions: materialOptions}).addTo(map);
+var layerControl = new L.Control.MaterialLayers(null, null, {position: 'bottomright', materialOptions: materialOptions}).addTo(map);
 
 // Material zoom control:
 var materialZoomControl = new L.Control.MaterialZoom({position: 'topright'}).addTo(map);
 
 // Material fullscreen control:
-var materialFullscreen = new L.Control.MaterialFullscreen({position: 'topright', materialOptions: {toolTips: true} }).addTo(map);
+var materialFullscreen = new L.Control.MaterialFullscreen({position: 'topright', materialOptions: {toolTips: false} }).addTo(map);
 
 // Search location (geocode) control
 /*var materialGeocodeControl =  new L.Control.MaterialGeocoderControl('mapbox.places', {position: 'topleft', autoComplete: true}).addTo(map);*/
@@ -93,7 +70,16 @@ var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
+var dark = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	subdomains: 'abcd',
+	minZoom: 0,
+	maxZoom: 20,
+	ext: 'png'
+});
+
 layerControl.addBaseLayer(osm, "Streets");
+layerControl.addBaseLayer(dark, "Contrast");
 {% if page.layers %}
 {% for layer in page.layers %}{% assign words = layer.name | split: ' ' %}{% capture layername %}{% for word in words %}{{ word | capitalize }}{% endfor %}{%endcapture%}
 var {{layername}} = omnivore.{{layer.filetype}}('{{layer.url}}').addTo(map);//{{layer.fitBounds}}
