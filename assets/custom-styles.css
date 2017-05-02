@@ -16,7 +16,10 @@ html, body {
   color: #304ffe;
   font-weight: 500;
 }
-/*custom controls css*/
+.demo-drawer-header {
+  height: auto;
+}
+/*custom map controls css*/
 .leaflet-control-search .search-cancel {
   height: 20px;
   position: relative;
@@ -90,7 +93,8 @@ input:focus, textarea:focus {
   width: 320px;
 }
 .demo-updates .mdl-card__title {
-  min-height: 150px;
+  min-height: 180px;
+  max-height: 180px;
   background-image: url(images/dog.png);
   background-size: cover;
   background-repeat: no-repeat;
@@ -119,5 +123,9 @@ input:focus, textarea:focus {
   .mdl-card--square {
     width: 100%;
     margin: 8px auto;
+  }
+  .leaflet-top.leaflet-left,
+  .leaflet-control-search.search-exp.leaflet-control {
+    width: 100%;
   }
 }

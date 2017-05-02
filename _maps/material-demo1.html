@@ -1,16 +1,26 @@
 ---
-title: This is a Leaflet Map
-basemap:
-center:
-zoom:
+title: Construction Map
+basemap: dark
 tags: construction
-image: image-01.jpg
+image: counties.jpg
+map-options:
+  center: "[39, -83.4]"
+  zoom: 14
+search: false
 layers:
-  - name: Layer 1
-    vectortype: point
-    filetype: geojson
-    url: assets/data/point.geojson
-    color: red
-    popupfields: name
-    fit-to-layer:
+  - name: Counties #no hyphens or special characters, written as you want it in the legend
+    vectortype: polygon
+    filetype: topojson
+    url: /material-maps/assets/data/counties.topojson
+    style:
+      color: red
+      weight: 1
+      fillColor: red
+    tooltip: ["NAME", "POPULATION"] #lists can be formatted as a bracketed list of strings or as a dashed list like the popup
+    popup:
+     - NAME
+     - POPULATION
+    fitBounds: true
+    search: true
+    searchField: NAME
 ---
