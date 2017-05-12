@@ -3,24 +3,22 @@ title: Services Map
 basemap: dark
 tags: services
 image: counties.jpg
-map-options:
-  center: "[39, -83.4]"
-  zoom: 14
-search: false
+#map options
+center: "[39, -83.4]"
+zoom: 14
 layers:
   - name: Counties #no hyphens or special characters, written as you want it in the legend
-    vectortype: polygon
-    filetype: topojson
+    shape: polygon
+    type: topojson
     url: /material-maps/assets/data/counties.topojson
-    style:
-      color: red
-      weight: 1
-      fillColor: red
+    color: red
+    weight: 1
+    fill: red
     tooltip: ["NAME", "POPULATION"] #lists can be formatted as a bracketed list of strings or as a dashed list like the popup
     popup:
      - NAME
      - POPULATION
-    fitBounds: true
-    search: true
-    searchField: NAME
+    fit: true
+    search:
+     - field: NAME
 ---

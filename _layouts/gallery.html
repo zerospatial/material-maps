@@ -12,7 +12,7 @@ layout: default
       <span class="mdl-card__title-text">{{map.title}}</span>
     </div>
     <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-      Non dolore elit adipisicing ea reprehenderit consectetur culpa.
+      {% if map.subtitle %}{{map.subtitle | limit:50}}{% else %}<br><br>{% endif %}
     </div>
     <div class="mdl-card__actions mdl-card--border">
       <a href="{{map.url | prepend:site.baseurl}}" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>

@@ -10,8 +10,8 @@ layout: default
 var searchControl;
 
 var map = new L.map('map', {
-  center: {% if page.map-options.center %}{{page.map-options.center}}{% else %}[39,-82]{% endif %},
-  zoom: {% if page.map-options.zoom %}{{page.map-options.zoom}}{% else %}10{% endif %},
+  center: {% if page.center %}{{page.center}}{% else %}[39,-82]{% endif %},
+  zoom: {% if page.zoom %}{{page.zoom}}{% else %}10{% endif %},
   zoomControl: false
 });
 
@@ -49,7 +49,7 @@ var materialFullscreen = new L.Control.MaterialFullscreen({position: 'topright',
 /*Search location (geocode) control*/
 /*var materialGeocodeControl =  new L.Control.MaterialGeocoderControl('mapbox.places', {position: 'topleft', autoComplete: true}).addTo(map);*/
 
-var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+var streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 19,
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 });
@@ -65,39 +65,53 @@ var dark = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/
 {% if page.basemap %}
 {{page.basemap}}.addTo(map);
 {%else%}
-osm.addTo(map);
+streets.addTo(map);
 {% endif %}
 
-layerControl.addBaseLayer(osm, "Streets");
+layerControl.addBaseLayer(streets, "Streets");
 
 layerControl.addBaseLayer(dark, "Contrast");
 
 {% if page.layers %}
 {% for layer in page.layers %}{% assign words = layer.name | split: ' ' %}{% capture layername %}{% for word in words %}{{ word | capitalize }}{% endfor %}{%endcapture%}
+{% if layer.type == "wms" %}
+var {{layername}} = L.tileLayer.wms("{{layer.url}}", {
+  layers: {% for layer in layer.layers %}'{{layer}}{% unless forloop.last %},{% endunless %}{%endfor%}',
+  transparent: true,
+  format: 'image/{{layer.format}}'
+}).addTo(map);
+{%else%}
 var {{layername}} = new L.geoJson(null, {
   style: {
-    color: {% if layer.style.color %}"{{layer.style.color}}"{% else%}"skyblue"{%endif%},
-    fillColor: {% if layer.style.color %}"{{layer.style.fillColor}}"{% else%}"skyblue"{%endif%},
-    weight: {% if layer.style.weight %}{{layer.style.weight}}{% else%}4{%endif%}
+    color: {% if layer.color %}"{{layer.color}}"{% else%}"skyblue"{%endif%},
+    fillColor: {% if layer.color %}"{{layer.fill}}"{% else%}"skyblue"{%endif%},
+    weight: {% if layer.weight %}{{layer.weight}}{% else%}4{%endif%}
   },
   onEachFeature: function(feature, shape) {
-    {% if layer.popup %}shape.bindPopup({% for field in layer.popup %}feature.properties["{{field}}"] + '<br />'{% unless forloop.last %}+{% endunless %}{%endfor%});{% endif%}
+    {% if layer.popup == 'all'%}/*test*/
+    var popupText = "";
+    for (var k in feature.properties) {
+      var v = String(feature.properties[k]);
+      popupText += '<strong>' + k + '</strong><br>' + v + '<br>' + '<hr style="margin:5px 0px;">';
+    };
+    shape.bindPopup(popupText);
+    {% elsif layer.popup %}shape.bindPopup({% for field in layer.popup %}feature.properties["{{field}}"] + '<br />'{% unless forloop.last %}+{% endunless %}{%endfor%});{% endif%}
     {% if layer.tooltip %}shape.bindTooltip({% for tip in layer.tooltip %}feature.properties["{{tip}}"] + '<br />'{% unless forloop.last %}+{% endunless %}{%endfor%}, {
       sticky: true
     });{%endif%}
   }
 }).addTo(map);
 
-var {{layername}}Data = omnivore.{{layer.filetype}}('{{layer.url}}', null, {{layername}});//{{layer.fitBounds}}
-{% if layer.fitBounds == true %}{{layername}}Data.on('ready', function() {
+var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}', null, {{layername}});//{{layer.fitBounds}}
+{% if layer.fit == true %}{{layername}}Data.on('ready', function() {
   map.fitBounds({{layername}}.getBounds());
 
-  {% if layer.search == true %}
+  {% if layer.search %}
   var prop = 'Search ' + '{{layername}}';
   searchControl = new L.Control.Search({
     /*can only search one layer or layer group at a time*/
     layer: {{layername}},
-    propertyName: "{{layer.searchField}}",
+    propertyName: "{{layer.search.field}}",
     textPlaceholder: prop,
     circleLocation: false,
     autoType: false,
@@ -108,21 +122,20 @@ var {{layername}}Data = omnivore.{{layer.filetype}}('{{layer.url}}', null, {{lay
   }).addTo(map);
 
   searchControl.on("search:locationfound", function() {
-    console.log('t');
+    //console.log('t');
     searchControl.collapse()
   });
   {% endif %}
 
 });{% endif %}
 {{layername}}.on('click', function (e) {
-  console.log(e)
+  //console.log(e)
 });
-
+{%endif%}
 layerControl.addOverlay({{layername}}, "{{layer.name}}");
-
 {%endfor%}
 {%endif%}
-{% if page.search != false %}
+{% if page.search == true %}
 searchControl = new L.Control.Search({
   url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
   jsonpParam: 'json_callback',
@@ -138,7 +151,7 @@ searchControl = new L.Control.Search({
 }).addTo(map);
 
 searchControl.on("search:locationfound", function() {
-  console.log('t');
+  //console.log('t');
   searchControl.collapse()
 });
 {% endif %}
