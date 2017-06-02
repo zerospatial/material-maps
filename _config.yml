@@ -2,6 +2,7 @@ baseurl: /material-maps
 url: https://ovrdc.github.io
 title: Material Maps
 
+exclude: ["Gemfile", "Gemfile.lock"]
 
 #Jekyll ignores folders with underscores unless otherwise noted
 collections:
