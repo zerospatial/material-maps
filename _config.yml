@@ -19,13 +19,13 @@ defaults:
 siteurl: "https://ovrdc.github.io/material-maps/"
 media: "/_maps/images/"
 metadata: 
-	_pages:
-     - name: "basemap"
-       field: 
-         element: select
-         label: Basemap
-         options:
-         	 - name: "Dark"
-               value: dark
-             - name: "Streets"
-               value: streets
+  _pages:
+    - name: "basemap"
+      field: 
+        element: select
+        label: Basemap
+        options:
+          - name: "Dark"
+            value: dark
+          - name: "Streets"
+            value: streets
