@@ -18,15 +18,15 @@ var map = new L.map('map', {
 L.hash(map);
 
 /*hide title on search click*/
-$("#materialSearch").click(function() {
+/*$("#materialSearch").click(function() {
   $("#navTitle").hide();
-});
+});*/
 
-map.on('moveend click', function() {
+/*map.on('moveend click', function() {
   if ($("#materialSearch").hasClass('is-focused')){}else {
     $("#navTitle").show();
   }
-});
+});*/
 
 /* =================================*/
 var materialOptions = {
@@ -106,14 +106,14 @@ var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}', null, {{layerna
 {% if layer.fit == true %}{{layername}}Data.on('ready', function() {
   map.fitBounds({{layername}}.getBounds());
 
-  {% if layer.search and layer.search != "true" %}
+  {% if layer.search and layer.search != "osm" %}
   var prop = 'Search ' + '{{layername}}';
   searchControl = new L.Control.Search({
     /*can only search one layer or layer group at a time*/
     layer: {{layername}},
     propertyName: "{{layer.search}}",
     textPlaceholder: prop,
-    circleLocation: false,
+    marker: false,
     autoType: false,
     autoCollapse: false,
     minLength: 2,
@@ -121,9 +121,13 @@ var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}', null, {{layerna
     collapsed: false
   }).addTo(map);
 
-  searchControl.on("search:locationfound", function() {
-    //console.log('t');
+  searchControl.on("search:locationfound", function(e) {
+    console.log(e);
+    e.layer.openPopup();
     searchControl.collapse()
+  });
+  $("#searchtext" + prop.length).on('input',function() {
+    $('.search-tooltip').width($('.search-tooltip').parent().width());
   });
   {% endif %}
 
@@ -135,7 +139,7 @@ var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}', null, {{layerna
 layerControl.addOverlay({{layername}}, "{{layer.name}}");
 {%endfor%}
 {%endif%}
-{% if page.search == true %}
+{% if page.search == "osm" %}
 searchControl = new L.Control.Search({
   url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
   jsonpParam: 'json_callback',
@@ -153,6 +157,12 @@ searchControl = new L.Control.Search({
 searchControl.on("search:locationfound", function() {
   //console.log('t');
   searchControl.collapse()
+});
+$("#searchtext16").on('input',function() {
+  $('.search-tooltip').width($('.search-tooltip').parent().width());
+});
+$("#searchtext16").on('change',function() {
+  $('.search-tooltip').width($('.search-tooltip').parent().width());
 });
 {% endif %}
 </script>
