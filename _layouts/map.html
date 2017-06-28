@@ -106,12 +106,12 @@ var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}', null, {{layerna
 {% if layer.fit == true %}{{layername}}Data.on('ready', function() {
   map.fitBounds({{layername}}.getBounds());
 
-  {% if layer.search %}
+  {% if layer.search and layer.search != "true" %}
   var prop = 'Search ' + '{{layername}}';
   searchControl = new L.Control.Search({
     /*can only search one layer or layer group at a time*/
     layer: {{layername}},
-    propertyName: "{{layer.search.field}}",
+    propertyName: "{{layer.search}}",
     textPlaceholder: prop,
     circleLocation: false,
     autoType: false,
