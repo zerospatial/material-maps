@@ -19,6 +19,24 @@ background-color: transparent;
   color: #304ffe;
   font-weight: 500;
 }
+/*Sidebar*/
+.mdl-layout--fixed-drawer.is-upgraded:not(.is-small-screen)>.mdl-layout__header {
+  margin-left: 280px;
+  width: calc(100% - 280px);
+}
+/*.mdl-layout__drawer {
+  margin-top: 68px;
+  width: 340px;
+  max-width: 100%;
+  transform: translateX(-350px);
+  max-height: calc(100vh-76px);
+  left: 6px;
+}*/
+.mdl-layout__drawer {
+  width: 280px;
+  max-width: 100%;
+  transform: translateX(-290px);
+}
 .demo-drawer-header {
   height: auto;
 }
@@ -71,6 +89,11 @@ input:focus, textarea:focus {
   font-family: Roboto, sans-serif;
 }
 /**/
+.android-drawer-separator {
+  height: 1px;
+  background-color:#eee !important;
+  margin: 8px 0;
+}
 .mdl-layout__header-row {
   padding: 0 16px 0 50px!important;
 }
