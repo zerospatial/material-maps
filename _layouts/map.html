@@ -7,6 +7,63 @@ layout: default
 <script src="{{site.baseurl}}/assets/plugins/leaflet-material/leaflet-material-custom.js"></script>
 <script>
 
+/*
+* Reveal custom layer control
+*/
+/*var revealToggles = document.getElementsByClassName('md-reveal--title');
+for (var i = 0; i < revealToggles.length; i++) {
+    revealToggles[i].addEventListener('click', function() {
+      console.log(this.children[1]);
+      var ht = this.children[1].scrollHeight;
+      console.log(ht);
+      this.children[1].height =  ht + "px!important";
+      console.log(this.children[1].height)
+      this["aria-expanded"] = true;
+      console.log(this["aria-expanded"]);
+      return false
+    });
+}*/
+$(".md-reveal--title").on('click', function(e) {
+  console.log(e);
+  var v = e.target.value;
+  if (v < 1) {
+    console.log(e.target.parentElement["aria-expanded"])
+    var x = e.target.parentElement.children[1];
+    console.log(x);
+    var ht = x.scrollHeight;
+    x.style.height =  ht + "px";
+    e.target.parentElement["aria-expanded"] = true;
+    e.target.parentElement.children[0].value = 1;
+    return false
+  }
+  if (v > 0) {
+    var x = e.target.parentElement.children[1];
+    var ht = x.scrollHeight;
+    x.style.height =  0;
+    e.target.parentElement["aria-expanded"] = false;
+    e.target.parentElement.children[0].value = 0;
+  }
+});
+
+
+/*var btn = document.getElementById("button");
+var outer = document.getElementById("outer");
+var inner = document.getElementById("inner");
+btn.addEventListener('click', function() {
+	if (this.value < 1) {
+    var ht = document.getElementById('inner').scrollHeight;
+		inner.style.height = ht + "px";
+    outer["aria-expanded"] = true;
+		this.value = 1;
+    return false;
+	}
+	if (this.value > 0) {
+		inner.style.height = "0";
+		this.value = 0;
+    outer["aria-expanded"] = false;
+	}
+});*/
+
 var searchControl;
 
 var map = new L.map('map', {
@@ -73,7 +130,9 @@ layerControl.addBaseLayer(streets, "Streets");
 layerControl.addBaseLayer(dark, "Contrast");
 
 {% if page.layers %}
-{% for layer in page.layers %}{% assign words = layer.name | split: ' ' %}{% capture layername %}{% for word in words %}{{ word | capitalize }}{% endfor %}{%endcapture%}
+{% for layer in page.layers %}
+{% assign words = layer.name | split: ' ' %}
+{% capture layername %}{% for word in words %}{{ word | capitalize }}{% endfor %}{%endcapture%}
 {% if layer.type == "wms" %}
 var {{layername}} = L.tileLayer.wms("{{layer.url}}", {
   layers: {% for layer in layer.layers %}'{{layer}}{% unless forloop.last %},{% endunless %}{%endfor%}',
@@ -81,6 +140,9 @@ var {{layername}} = L.tileLayer.wms("{{layer.url}}", {
   format: 'image/{{layer.format}}'
 }).addTo(map);
 {%else%}
+/*{{layername}}*/
+var tableEntry = '<tr><td id="1" class="mdl-data-table__cell--non-numeric">{{layer.name}}</td></tr>';
+$("#layerTableBody").append(tableEntry.toString());
 var {{layername}} = new L.geoJson(null, {
   style: {
     color: {% if layer.color %}"{{layer.color}}"{% else%}"skyblue"{%endif%},
@@ -101,6 +163,8 @@ var {{layername}} = new L.geoJson(null, {
     });{%endif%}
   }
 }).addTo(map);
+
+componentHandler.upgradeAllRegistered();
 
 var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}', null, {{layername}});//{{layer.fitBounds}}
 {% if layer.fit == true %}{{layername}}Data.on('ready', function() {

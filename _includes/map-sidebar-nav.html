@@ -8,31 +8,43 @@
     <label class="mdl-textfield__label" for="sample1">Search Layers...</label>
   </div>
 </form>
-<div class="android-drawer-separator"></div>
-<h5 class="mdl-color-text--primary mdl-typography--text-center mdl-typography--text-uppercase">Basemaps</h5>
-<div class="android-drawer-separator"></div>
-<div>
-  <h5 class="mdl-color-text--primary mdl-typography--text-center mdl-typography--text-uppercase">Layers</h5>
-  <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable" style="width:100%;font-size:16px;">
-    <thead>
-      <tr>
-        <th class="mdl-data-table__cell--non-numeric">Select All</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="mdl-data-table__cell--non-numeric">Parcels</td>
-      </tr>
-      <tr>
-        <td class="mdl-data-table__cell--non-numeric">Hydrants</td>
-      </tr>
-      <tr>
-        <td class="mdl-data-table__cell--non-numeric">Parks</td>
-      </tr>
-    </tbody>
-  </table>
+<div aria-expanded="false">
+  <button class="md-reveal--title mdl-button mdl-js-button mdl-button--primary mdl-typography--text-uppercase" value="0">Basemaps</button>
+  <div id="layerCheckboxes" class="md-reveal" style="height:0;">
+    <table id="basemapTable" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable" style="width:100%;font-size:16px;">
+      <thead>
+        <tr>
+          <th class="mdl-data-table__cell--non-numeric">Select All</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Streets</td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Ortho</td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Gray</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-<div class="android-drawer-separator"></div>
+<div aria-expanded="false">
+  <button id="test" class="md-reveal--title mdl-button mdl-js-button mdl-button--primary mdl-typography--text-uppercase" value="0"  style="border-top:none;">Layers</button>
+  <div class="md-reveal" style="height:0;">
+    <table id="layerTable" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable" style="width:100%;font-size:16px;">
+      <thead>
+        <tr>
+          <th class="mdl-data-table__cell--non-numeric">Select All</th>
+        </tr>
+      </thead>
+      <tbody id="layerTableBody">
+      </tbody>
+    </table>
+  </div>
+</div>
 <!--a class="mdl-navigation__link" href=""><i class="mdl-color-text--grey-900 material-icons" role="presentation">forum</i>Forums</div>
 <div class="mdl-navigation__link" href=""><i class="mdl-color-text--grey-900 material-icons" role="presentation">flag</i>Updates</div>
 <div class="mdl-navigation__link" href=""><i class="mdl-color-text--grey-900 material-icons" role="presentation">local_offer</i>Promos</div>
