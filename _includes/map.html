@@ -78,19 +78,13 @@ var searchControl;
 var map = new L.map('map', {
   center: {% if page.center %}{{page.center}}{% else %}[39,-82]{% endif %},
   zoom: {% if page.zoom %}{{page.zoom}}{% else %}10{% endif %},
-  zoomControl: false
+  fullscreenControl: true,
+  fullscreenControlOptions: {
+    position: 'topright'
+  }
 });
 
 L.hash(map);
-
-/* =================================*/
-var materialOptions = {
-  fab: true,
-  miniFab: true,
-  rippleEffect: true,
-  toolTips: false,
-  color: 'primary'
-}
 
 var basemaps = []
 
