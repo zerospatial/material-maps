@@ -124,7 +124,7 @@ var currentBasemap = "{{page.basemap}}";
 basemaps[currentBasemap].addTo(map);
 {%else%}
 var currentBasemap = "streets";
-streets.addTo(map);
+mapLayers["streets"].addTo(map);
 {% endif %}
 
 //layerControl.addBaseLayer(basemaps["streets"], "Streets");
