@@ -14,16 +14,18 @@ defaults:
       path: ""
       type: maps
     values:
-      layout: map
-      
+      layout: default
+      type: map
+      permalink: /maps/:title/
+
 # Prose.io Config File
 prose:
   siteurl: "https://ovrdc.github.io/material-maps/"
   media: "/_maps/images/"
-  metadata: 
+  metadata:
     "":
       - name: "basemap"
-        field: 
+        field:
           element: select
           label: Basemap
           options:

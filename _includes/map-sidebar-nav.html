@@ -1,17 +1,29 @@
 <!-- Simple Textfield -->
-<form action="#">
+<!--form action="#">
   <label class="mdl-button mdl-js-button mdl-button--icon" for="map-controls--search-input" data-upgraded=",MaterialButton">
     <i class="material-icons">search</i>
   </label>
   <div class="mdl-textfield mdl-js-textfield" style="width:80%;">
-    <input class="mdl-textfield__input" type="text" id="sample1">
+    <input id="" class="mdl-textfield__input" type="text" id="sample1">
     <label class="mdl-textfield__label" for="sample1">Search Layers...</label>
   </div>
-</form>
+</form-->
+<div id="mapSearchControl" style="display:none;">
+    <i class="material-icons" style='float:left;line-height:44px;padding-left:14px;'>search</i>
+</div>
 <div aria-expanded="false">
   <button class="md-reveal--title mdl-button mdl-js-button mdl-button--primary mdl-typography--text-uppercase" value="0">Basemaps</button>
-  <div id="layerCheckboxes" class="md-reveal" style="height:0;">
-    <table id="basemapTable" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable" style="width:100%;font-size:16px;">
+  <div id="basemapSwitcher" class="md-reveal md-reveal--list" style="height:0;">
+    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="streets">
+      <input type="radio" id="streets" class="mdl-radio__button" name="options" value="1" {% if page.basemap == 'streets' %}checked{% endif %}>
+      <span class="mdl-radio__label">Streets</span>
+    </label>
+    <br />
+    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="contrast">
+      <input type="radio" id="contrast" class="mdl-radio__button" name="options" value="2" {% if page.basemap == 'contrast' %}checked{% endif %}>
+      <span class="mdl-radio__label">Contrast</span>
+    </label>
+    <!--table id="basemapTable" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable" style="width:100%;font-size:16px;">
       <thead>
         <tr>
           <th class="mdl-data-table__cell--non-numeric">Select All</th>
@@ -28,21 +40,16 @@
           <td class="mdl-data-table__cell--non-numeric">Gray</td>
         </tr>
       </tbody>
-    </table>
+    </table-->
   </div>
 </div>
 <div aria-expanded="false">
   <button id="test" class="md-reveal--title mdl-button mdl-js-button mdl-button--primary mdl-typography--text-uppercase" value="0"  style="border-top:none;">Layers</button>
-  <div class="md-reveal" style="height:0;">
-    <table id="layerTable" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable" style="width:100%;font-size:16px;">
-      <thead>
-        <tr>
-          <th class="mdl-data-table__cell--non-numeric">Select All</th>
-        </tr>
-      </thead>
-      <tbody id="layerTableBody">
-      </tbody>
-    </table>
+  <div id="mapLayerSwitcher" class="md-reveal md-reveal--list" style="height:0;">
+    <!--label id ="checkall" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-0">
+      <input type="checkbox" id="checkbox-0" class="mdl-checkbox__input">
+      <span class="mdl-checkbox__label md-small-caps">Select All</span>
+    </label-->
   </div>
 </div>
 <!--a class="mdl-navigation__link" href=""><i class="mdl-color-text--grey-900 material-icons" role="presentation">forum</i>Forums</div>

@@ -26,49 +26,23 @@
     <link rel="shortcut icon" href="{{site.baseurl}}/images/favicon.png">
     {%endif%}
     <!-- Material Dashboard theme and fonts-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Montserrat|Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <!--see https://getmdl.io/customize/ for many other color themes-->
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-red.min.css">
-    <link rel="stylesheet" href="{{site.baseurl}}/assets/material-dashboard/styles.css">
-    {% if page.layout == 'map'%}
-    <!--Leaflet 1.0.3 updated 1/26/2017-->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
-    <!-- Leaflet Omnivore Plugin GeoJson KML Etc -->
-    <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
-    <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/Leaflet.fullscreen.min.js'></script>
-    <link rel="stylesheet" href="{{site.baseurl}}/assets/plugins/leaflet-material/leaflet-material.css" />
-    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <script src="{{site.baseurl}}/assets/plugins/leaflet-material/leaflet-material.js"></script>
-    <link rel="stylesheet" href="{{site.baseurl}}/assets/plugins/leaflet-search/leaflet-search.min.css" />
-    <script src="{{site.baseurl}}/assets/plugins/leaflet-search/leaflet-search.src.js"></script>
-    <script src="{{site.baseurl}}/assets/plugins/leaflet-hash.js"></script>
+    {% if page.type == "gallery" %}
+    <link rel="stylesheet" href="{{site.baseurl}}/assets/ui-style.css" />
+    {% endif %}
+    {% if page.type == 'map'%}
+    <link rel="stylesheet" href="{{site.baseurl}}/assets/map-style.css" />
     {%endif%}
-    <link rel="stylesheet" href="{{site.baseurl}}/assets/custom-styles.css">
-    <style>
-    * {
-      font-family: Roboto, sans-serif;
-    }
-    h1,h2,h3,h4,h5,h6,mdl-card__title-text {
-      font-family: Montserrat;
-    }
-    .mdl-textfield__input {
-      font-family: "Roboto","Arial",sans-serif;
-    }
-    td, th, table {
-      border:none!important;
-    }
-    </style>
   </head>
     <body>
       <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-        <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-900">
+        <header class="demo-header mdl-layout__header mdl-color--white mdl-color-text--grey-900">
           <div class="mdl-layout__header-row">
             <span id="navTitle" class="mdl-layout-title">{{page.title}}</span>
             <div class="mdl-layout-spacer"></div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-            {% if page.layout == "map" %}
+            {% if page.type == "map" %}
             <!--button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
               <i class="material-icons">layers</i>
             </button>
@@ -102,20 +76,37 @@
           <div class="mdl-color-text--primary mdl-typography--text-center">
           </div>
           <nav class="demo-navigation mdl-navigation mdl-color--white mdl-color-text--grey-900">
-            {% if page.layout == 'gallery' %}{% include gallery-sidebar-nav.html %}{% endif %}
-            {% if page.layout == 'map' %}{% include map-sidebar-nav.html %}{% endif %}
+            {% if page.type == 'gallery' %}{% include gallery-sidebar-nav.html %}{% endif %}
+            {% if page.type == 'map' %}{% include map-sidebar-nav.html %}{% endif %}
             <div class="mdl-layout-spacer"></div>
             <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
           </nav>
         </div>
         <main class="mdl-layout__content mdl-color--grey-100">
-          {{content}}
+          {% if page.type == 'map' %}<div id="map"></div>{% endif %}
+          {% if page.type == 'gallery' %}
+          <div class="mdl-grid demo-content">
+            {%for map in site.maps%}
+            <div class="demo-updates mdl-card mdl-card--square mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet app{% if map.tags %}{% for tag in map.tags %} {{ tag }}{% endfor %}{% endif %}">
+                <a href="{{map.url | prepend:site.baseurl}}">
+                  <div class="mdl-card__title mdl-card--expand mdl-color--teal-300" style="background-image:url(maps/images/{{map.image}})">
+                  </div>
+                </a>
+              <div class="mdl-card__actions">
+                <span class="mdl-card__title-text">{{map.title}}</span>
+              </div>
+              <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+                {% if map.subtitle %}{{map.subtitle | limit:50}}{% else %}<br><br>{% endif %}
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <a href="{{map.url | prepend:site.baseurl}}" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>
+              </div>
+            </div>
+            {%endfor%}
+          </div>
         </main>
       </div>
-      {% if page.layout != 'map' %}
-      <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>{% endif %}
-      {% if page.layout == "gallery" %}
-      <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+      <script src="{{site.baseurl}}/assets/gallery-bundle.js"></script>
       <script>
       $('.filter').click(function() {
         var id = $(this).attr('id');
@@ -126,6 +117,11 @@
       $('#reset').click(function() {
         $('.app').fadeIn();
       });
-    </script>{% endif %}
+      </script>
+      {% endif %}
+      {% if page.type == "map" %}
+      <script src="{{site.baseurl}}/assets/map-bundle.js"></script>
+      {% include {{page.type}}.html %}
+      {% endif %}
     </body>
 </html>

@@ -3,6 +3,33 @@ html, body {
   width: 100%;
   height: 100%;
 }
+* {
+  font-family: Roboto, sans-serif;
+}
+h1,h2,h3,h4,h5,h6,mdl-card__title-text {
+  font-family: Montserrat;
+}
+.mdl-textfield__input {
+  font-family: "Roboto","Arial",sans-serif;
+}
+td, th, table {
+  border:none!important;
+}
+input::-webkit-input-placeholder {
+  color: rgba(0,0,0,.26)!important;
+}
+
+input:-moz-placeholder { /* Firefox 18- */
+  color: rgba(0,0,0,.26)!important;
+}
+
+input::-moz-placeholder {  /* Firefox 19+ */
+  color: rgba(0,0,0,.26)!important;
+}
+
+input:-ms-input-placeholder {
+  color: rgba(0,0,0,.26)!important;
+}
 .mdl-layout__header .mdl-layout__drawer-button {
 background-color: transparent;
 }
@@ -22,7 +49,7 @@ background-color: transparent;
 h5 {
   margin: 6px;
 }
-/*div reveal*/
+/*div reveal maps layer switcher*/
 .md-reveal {
   -webkit-transition: height .22s ease-out;
   -moz-transition: height .22s ease-out;
@@ -40,7 +67,6 @@ button.md-reveal--title  {
   letter-spacing: .02em;
   padding:12px;
 }
-
 .md-reveal--title {
   border-top: solid 1px #eee;
   padding:8px;
@@ -50,11 +76,19 @@ button.md-reveal--title  {
   height:0;
   overflow:hidden;
 }
-/*Sidebar*/
-.mdl-layout--fixed-drawer.is-upgraded:not(.is-small-screen)>.mdl-layout__header {
-  margin-left: 280px;
-  width: calc(100% - 280px);
+.md-reveal .mdl-radio,
+.md-reveal .mdl-checkbox {
+  margin: 10px 0;
 }
+.md-reveal .md-small-caps {
+  font-size: smaller;
+  text-transform: uppercase;
+  color: gray;
+}
+.md-reveal--list {
+  padding-left: 68px;
+}
+/*Sidebar*/
 /*.mdl-layout__drawer {
   margin-top: 68px;
   width: 340px;
@@ -63,18 +97,33 @@ button.md-reveal--title  {
   max-height: calc(100vh-76px);
   left: 6px;
 }*/
-.mdl-layout--fixed-drawer>.mdl-layout__content {
-  margin-left: 280px;
-}
 .mdl-layout__drawer {
   width: 280px;
   max-width: 100%;
   transform: translateX(-290px);
 }
+@media screen and (min-width:1025px) {
+  .mdl-layout--fixed-drawer.is-upgraded:not(.is-small-screen)>.mdl-layout__header {
+    margin-left: 280px;
+    width: calc(100% - 280px);
+  }
+  .mdl-layout--fixed-drawer>.mdl-layout__content {
+    margin-left: 280px;
+  }
+}
 .demo-drawer-header {
   height: auto;
 }
 /*custom map controls css*/
+.leaflet-control-search .search-tip {
+  background: #f5f5f5;
+  border-radius: 0;
+}
+.leaflet-control-search .search-tooltip  {
+  background-color: white;
+  box-shadow: 0px 2px 6px rgba(0,0,0,.4);
+  max-height:600px;;
+}
 .leaflet-control-search .search-cancel {
   height: 20px;
   position: relative;

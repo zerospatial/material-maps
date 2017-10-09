@@ -1,7 +1,7 @@
 ---
 title: WMS Layer
 subtitle: Weather WMS Layer from NOAA
-#basemaps streets or dark
+#basemaps streets or contrast
 basemap: streets
 tags: services #available services, construction, recreation
 image: counties.jpg
@@ -10,10 +10,11 @@ center: "[39, -83.4]"
 zoom: 6
 #map layers
 layers:
-  - name: Rivers #no hyphens or special characters, written as you want it in the legend
+  - name: Weather #no hyphens or special characters, written as you want it in the legend
     url: https://idpgis.ncep.noaa.gov/arcgis/services/NWS_Observations/radar_base_reflectivity/MapServer/WMSServer
     type: wms
     format: png
+    opacity: 0.7
     layers:
      - 1
 ---

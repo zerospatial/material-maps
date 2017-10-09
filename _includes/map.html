@@ -1,68 +1,77 @@
----
-layout: default
----
-<div id="map">
-</div>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="{{site.baseurl}}/assets/plugins/leaflet-material/leaflet-material-custom.js"></script>
 <script>
 
 /*
-* Reveal custom layer control
+* Custom map layer control
 */
-/*var revealToggles = document.getElementsByClassName('md-reveal--title');
-for (var i = 0; i < revealToggles.length; i++) {
-    revealToggles[i].addEventListener('click', function() {
-      console.log(this.children[1]);
-      var ht = this.children[1].scrollHeight;
-      console.log(ht);
-      this.children[1].height =  ht + "px!important";
-      console.log(this.children[1].height)
-      this["aria-expanded"] = true;
-      console.log(this["aria-expanded"]);
-      return false
-    });
-}*/
-$(".md-reveal--title").on('click', function(e) {
-  console.log(e);
-  var v = e.target.value;
-  if (v < 1) {
-    console.log(e.target.parentElement["aria-expanded"])
-    var x = e.target.parentElement.children[1];
-    console.log(x);
-    var ht = x.scrollHeight;
-    x.style.height =  ht + "px";
-    e.target.parentElement["aria-expanded"] = true;
-    e.target.parentElement.children[0].value = 1;
-    return false
-  }
-  if (v > 0) {
-    var x = e.target.parentElement.children[1];
-    var ht = x.scrollHeight;
-    x.style.height =  0;
-    e.target.parentElement["aria-expanded"] = false;
-    e.target.parentElement.children[0].value = 0;
-  }
+var mapLayers = [];
+
+function addMapLayers(layer, name, on) {
+	var label = document.createElement('label');
+	var input = document.createElement('input');
+	input.id = layer;
+	input.type = 'checkbox';
+	input.className = 'mdl-checkbox__input';
+	var span = document.createElement('span');
+	var spanText = document.createTextNode(name);
+	span.appendChild(spanText);
+	span.className = 'mdl-checkbox__label';
+	label.appendChild(span);
+	label.appendChild(input);
+	label.className = 'mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect check';
+	label.for = layer;
+	label.id = layer + 'label';
+	componentHandler.upgradeElement(label);
+	document.getElementById('mapLayerSwitcher').appendChild(label);
+	if (on === true ) {document.getElementById(layer + 'label').MaterialCheckbox.check();}
+}
+
+$("#mapLayerSwitcher").on('change', '.mdl-checkbox', function(e) {
+	var layer = e.target.id;
+	console.log($(e));
+	if (layer != 'checkbox-0') {
+		!map.hasLayer(mapLayers[layer])
+		? map.addLayer(mapLayers[layer])
+		: map.removeLayer(mapLayers[layer])
+
+	}
 });
 
+/*
+* Check all checkboxes code
+*/
+/*
+$("#checkall input").change(function() {
+		var listaElementos = document.querySelectorAll('.check');
 
-/*var btn = document.getElementById("button");
-var outer = document.getElementById("outer");
-var inner = document.getElementById("inner");
-btn.addEventListener('click', function() {
-	if (this.value < 1) {
-    var ht = document.getElementById('inner').scrollHeight;
-		inner.style.height = ht + "px";
-    outer["aria-expanded"] = true;
-		this.value = 1;
-    return false;
-	}
-	if (this.value > 0) {
-		inner.style.height = "0";
-		this.value = 0;
-    outer["aria-expanded"] = false;
-	}
-});*/
+		for(var i=0, n=listaElementos.length; i<n; i++){
+			var element = listaElementos[i];
+
+			if($('#checkall input').is(":checked")) {
+				element.MaterialCheckbox.check();
+	  	}
+		  else {
+				element.MaterialCheckbox.uncheck();
+		  }
+		}
+	});
+
+	$('.check').change(function(){
+
+		var listaElementos = document.querySelectorAll('.check');
+
+		for(var i=0, n=listaElementos.length; i<n; i++){
+			var element = listaElementos[i];
+			if($('.check input:checked').length == $('.check input').length ) {
+				document.querySelector('#checkall').MaterialCheckbox.check();
+			}else{
+				document.querySelector('#checkall').MaterialCheckbox.uncheck();
+			}
+		}
+	});*/
+
+function layerSwitcher(e) {
+  console.log($(e))
+}
 
 var searchControl;
 
@@ -74,17 +83,6 @@ var map = new L.map('map', {
 
 L.hash(map);
 
-/*hide title on search click*/
-/*$("#materialSearch").click(function() {
-  $("#navTitle").hide();
-});*/
-
-/*map.on('moveend click', function() {
-  if ($("#materialSearch").hasClass('is-focused')){}else {
-    $("#navTitle").show();
-  }
-});*/
-
 /* =================================*/
 var materialOptions = {
   fab: true,
@@ -95,7 +93,7 @@ var materialOptions = {
 }
 
 /* Material layer control:*/
-var layerControl = new L.Control.MaterialLayers(null, null, {position: 'bottomright', materialOptions: materialOptions}).addTo(map);
+//var layerControl = new L.Control.MaterialLayers(null, null, {position: 'bottomright', materialOptions: materialOptions}).addTo(map);
 
 /* Material zoom control:*/
 var materialZoomControl = new L.Control.MaterialZoom({position: 'topright'}).addTo(map);
@@ -106,12 +104,14 @@ var materialFullscreen = new L.Control.MaterialFullscreen({position: 'topright',
 /*Search location (geocode) control*/
 /*var materialGeocodeControl =  new L.Control.MaterialGeocoderControl('mapbox.places', {position: 'topleft', autoComplete: true}).addTo(map);*/
 
-var streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+var basemaps = []
+
+basemaps["streets"] = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 19,
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 });
 
-var dark = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.{ext}', {
+basemaps["contrast"] = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.{ext}', {
 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 	subdomains: 'abcd',
 	minZoom: 0,
@@ -120,30 +120,56 @@ var dark = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/
 });
 
 {% if page.basemap %}
-{{page.basemap}}.addTo(map);
+var currentBasemap = "{{page.basemap}}";
+basemaps[currentBasemap].addTo(map);
 {%else%}
+var currentBasemap = "streets";
 streets.addTo(map);
 {% endif %}
 
-layerControl.addBaseLayer(streets, "Streets");
+//layerControl.addBaseLayer(basemaps["streets"], "Streets");
 
-layerControl.addBaseLayer(dark, "Contrast");
+//layerControl.addBaseLayer(basemaps["contrast"], "Contrast");
+
+$(".mdl-radio").change(function() {
+  basemapSwitch(this);
+});
+
+function basemapSwitch(e) {
+  console.log($(e));
+  if($(e).hasClass('is-checked')) {
+    var newBasemap = ($(e).attr('for')).toString();
+    console.log(newBasemap);
+    console.log(currentBasemap);
+    if (currentBasemap != newBasemap) {
+      map.removeLayer(basemaps[currentBasemap]);
+      map.addLayer(basemaps[newBasemap]);
+      currentBasemap = newBasemap;
+    }
+  }
+}
 
 {% if page.layers %}
 {% for layer in page.layers %}
 {% assign words = layer.name | split: ' ' %}
 {% capture layername %}{% for word in words %}{{ word | capitalize }}{% endfor %}{%endcapture%}
 {% if layer.type == "wms" %}
-var {{layername}} = L.tileLayer.wms("{{layer.url}}", {
+map.createPane('wmspane');
+map.getPane('wmspane').style.zindex = 250;
+mapLayers["{{layername}}"] = L.tileLayer.wms("{{layer.url}}", {
   layers: {% for layer in layer.layers %}'{{layer}}{% unless forloop.last %},{% endunless %}{%endfor%}',
   transparent: true,
-  format: 'image/{{layer.format}}'
+  format: 'image/{{layer.format}}',
+	pane: 'wmspane',
+	opacity: {% if layer.opacity %}{{layer.opacity}}{% else %}0.8{%endif %}
 }).addTo(map);
+addMapLayers("{{layername}}", "{{layer.name}}", true);
 {%else%}
 /*{{layername}}*/
-var tableEntry = '<tr><td id="1" class="mdl-data-table__cell--non-numeric">{{layer.name}}</td></tr>';
-$("#layerTableBody").append(tableEntry.toString());
-var {{layername}} = new L.geoJson(null, {
+
+addMapLayers("{{layername}}", "{{layer.name}}", true);
+
+mapLayers["{{layername}}"] = new L.geoJson(null, {
   style: {
     color: {% if layer.color %}"{{layer.color}}"{% else%}"skyblue"{%endif%},
     fillColor: {% if layer.color %}"{{layer.fill}}"{% else%}"skyblue"{%endif%},
@@ -166,28 +192,31 @@ var {{layername}} = new L.geoJson(null, {
 
 componentHandler.upgradeAllRegistered();
 
-var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}', null, {{layername}});//{{layer.fitBounds}}
+var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}', null, mapLayers["{{layername}}"]);//{{layer.fitBounds}}
 {% if layer.fit == true %}{{layername}}Data.on('ready', function() {
-  map.fitBounds({{layername}}.getBounds());
+  map.fitBounds({{layername}}Data.getBounds());
 
   {% if layer.search and layer.search != "osm" %}
+	document.getElementById('mapSearchControl').style.display = 'block';
   var prop = 'Search ' + '{{layername}}';
   searchControl = new L.Control.Search({
     /*can only search one layer or layer group at a time*/
-    layer: {{layername}},
+    layer: mapLayers["{{layername}}"],
     propertyName: "{{layer.search}}",
+    container: "mapSearchControl",
     textPlaceholder: prop,
     marker: false,
     autoType: false,
     autoCollapse: false,
     minLength: 2,
-    zoom:13,
-    collapsed: false
+    zoom:null,
+    collapsed: false,
   }).addTo(map);
 
   searchControl.on("search:locationfound", function(e) {
     console.log(e);
     e.layer.openPopup();
+		map.flyToBounds(e.layer.getBounds());
     searchControl.collapse()
   });
   $("#searchtext" + prop.length).on('input',function() {
@@ -196,18 +225,17 @@ var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}', null, {{layerna
   {% endif %}
 
 });{% endif %}
-{{layername}}.on('click', function (e) {
-  //console.log(e)
-});
 {%endif%}
-layerControl.addOverlay({{layername}}, "{{layer.name}}");
+//layerControl.addOverlay({{layername}}, "{{layer.name}}");
 {%endfor%}
 {%endif%}
 {% if page.search == "osm" %}
+document.getElementById('mapSearchControl').style.display = 'block';
 searchControl = new L.Control.Search({
   url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
   jsonpParam: 'json_callback',
   propertyName: 'display_name',
+	container: "mapSearchControl",
   propertyLoc: ['lat','lon'],
   textPlaceholder: 'Search Addresses',
   circleLocation: false,
@@ -229,6 +257,7 @@ $("#searchtext16").on('change',function() {
   $('.search-tooltip').width($('.search-tooltip').parent().width());
 });
 {% endif %}
+
 </script>
 
 {{content}}
