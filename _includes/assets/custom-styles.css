@@ -115,6 +115,27 @@ button.md-reveal--title  {
   height: auto;
 }
 /*custom map controls css*/
+/*
+* Control FUllscreen mimic material
+*/
+
+.leaflet-control-zoom {
+  border: none!important;
+}
+.leaflet-control-zoom a:hover {
+  border-bottom:none;
+  background-color: lightgray;
+}
+.leaflet-control-zoom a {
+  border: none;
+  border-radius: 20px!important;
+  margin-bottom: 8px;
+  width:40px!important;
+  height:40px!important;
+  line-height: 40px!important;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
 .leaflet-control-search .search-tip {
   background: #f5f5f5;
   border-radius: 0;
