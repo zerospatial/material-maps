@@ -92,18 +92,6 @@ var materialOptions = {
   color: 'primary'
 }
 
-/* Material layer control:*/
-//var layerControl = new L.Control.MaterialLayers(null, null, {position: 'bottomright', materialOptions: materialOptions}).addTo(map);
-
-/* Material zoom control:*/
-var materialZoomControl = new L.Control.MaterialZoom({position: 'topright'}).addTo(map);
-
-/* Material fullscreen control:*/
-var materialFullscreen = new L.Control.MaterialFullscreen({position: 'topright', materialOptions: {toolTips: false} }).addTo(map);
-
-/*Search location (geocode) control*/
-/*var materialGeocodeControl =  new L.Control.MaterialGeocoderControl('mapbox.places', {position: 'topleft', autoComplete: true}).addTo(map);*/
-
 var basemaps = []
 
 basemaps["streets"] = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
