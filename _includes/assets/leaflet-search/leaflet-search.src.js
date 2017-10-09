@@ -13,7 +13,7 @@
 */
 
 //TODO implement can do research on multiple sources layers and remote
-//TODO history: false,		//show latest searches in tooltip
+//TODO history: false,		//show latest searches in
 //FIXME option condition problem {autoCollapse: true, markerLocation: true} not show location
 //FIXME option condition problem {autoCollapse: false }
 //
@@ -194,7 +194,9 @@ L.Control.Search = L.Control.extend({
 	setLayer: function(layer) {	//set search layer at runtime
 		//this.options.layer = layer; //setting this, run only this._recordsFromLayer()
 		this._layer = layer;
-		this._layer.addTo(this._map);
+    if (this.options.add != false) {
+      this._layer.addTo(this._map);
+    }
 		return this;
 	},
 

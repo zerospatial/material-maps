@@ -50,7 +50,7 @@ h5 {
   margin: 6px;
 }
 /*div reveal maps layer switcher*/
-.md-reveal {
+.md-reveal, .mdl-card {
   -webkit-transition: height .22s ease-out;
   -moz-transition: height .22s ease-out;
   -o-transition: height .22s ease-out;
@@ -218,6 +218,12 @@ input:focus, textarea:focus {
 }
 .demo-content {
   max-width: 1344px;
+}
+.mdl-card {
+  -webkit-transition: opacity .22s ease-out;
+  -moz-transition: opacity .22s ease-out;
+  -o-transition: opacity .22s ease-out;
+  transition: opacity .22s ease-out;
 }
 .mdl-card--square {
   width: 320px;

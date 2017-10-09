@@ -27,7 +27,7 @@ function addMapLayers(layer, name, on) {
 
 $("#mapLayerSwitcher").on('change', '.mdl-checkbox', function(e) {
 	var layer = e.target.id;
-	console.log($(e));
+	/*console.log($(e));*/
 	if (layer != 'checkbox-0') {
 		!map.hasLayer(mapLayers[layer])
 		? map.addLayer(mapLayers[layer])
@@ -118,7 +118,7 @@ $(".mdl-radio").change(function() {
 });
 
 function basemapSwitch(e) {
-  console.log($(e));
+  /*console.log($(e));*/
   if($(e).hasClass('is-checked')) {
     var newBasemap = ($(e).attr('for')).toString();
     console.log(newBasemap);
@@ -135,6 +135,9 @@ function basemapSwitch(e) {
 {% for layer in page.layers %}
 {% assign words = layer.name | split: ' ' %}
 {% capture layername %}{% for word in words %}{{ word | capitalize }}{% endfor %}{%endcapture%}
+addMapLayers("{{layername}}", "{{layer.name}}", true);
+componentHandler.upgradeAllRegistered();
+
 {% if layer.type == "wms" %}
 map.createPane('wmspane');
 map.getPane('wmspane').style.zindex = 250;
@@ -145,18 +148,95 @@ mapLayers["{{layername}}"] = L.tileLayer.wms("{{layer.url}}", {
 	pane: 'wmspane',
 	opacity: {% if layer.opacity %}{{layer.opacity}}{% else %}0.8{%endif %}
 }).addTo(map);
-addMapLayers("{{layername}}", "{{layer.name}}", true);
+
 {%else%}
 /*{{layername}}*/
+var {{layername}}Id = 0;
+var {{layername}}Style = {
+  color: {% if layer.color %}"{{layer.color}}"{% else%}"skyblue"{%endif%},
+  fillColor: {% if layer.color %}"{{layer.fill}}"{% else%}"skyblue"{%endif%},
+  weight: {% if layer.weight %}{{layer.weight}}{% else%}4{%endif%}
+};
 
-addMapLayers("{{layername}}", "{{layer.name}}", true);
+function showPopupCard(props) {
+  var popup = "";
+  for (var k in props) {
+    var v = String(props[k]);
+    popup += '<strong>' + k + '</strong><br>' + v + '<br>' + '<hr style="margin:5px 0px;">';
+  };
+  document.getElementById("mapLayerInfoWrapper").style.display = 'block';
+  document.getElementById("mapLayerInfo").innerHTML = popup;
+}
 
+{% if layer.vectorgrid == true %}
+/*vector grid instead of normal leaflet layer*/
+var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}');
+{{layername}}Data.on('ready', function() {
+  var {{layername}}GeoJSON = {{layername}}Data.toGeoJSON();
+  var gridIndex = 0;
+  {{layername}}GeoJSON.features.map(function(feature) {
+    gridIndex = gridIndex + 1;
+    feature.properties.gridIndex = gridIndex;
+    return feature
+  });
+  mapLayers["{{layername}}"] = L.vectorGrid.slicer({{layername}}GeoJSON, {
+    rendererFactory: L.canvas.tile,
+    vectorTileLayerStyles: {
+      sliced: {{layername}}Style
+    },
+    maxZoom: 22,
+    interactive: true,
+    getFeatureId: function(f) {
+      return f.properties.gridIndex
+    }
+  }).addTo(map);
+
+  mapLayers["{{layername}}"].on('click', function(e) {
+    console.log(e);
+    if (e.layer.feature) {
+      var props = e.layer.feature.properties;
+      var latlng = [e.latlng.lat,e.latlng.lng];
+    }else{
+      var props = e.layer.properties;
+      var latlng = [Number(e.latlng.lat),Number(e.latlng.lng)];
+    }
+    if ({{layername}}Id != 0) {
+      mapLayers["{{layername}}"].setFeatureStyle({{layername}}Id, {
+        color: {{layername}}Style.color,
+        weight: {{layername}}Style.weight,
+      });
+    }
+    var popup = "";
+    for (var k in props) {
+      var v = String(props[k]);
+      popup += '<strong>' + k + '</strong><br>' + v + '<br>' + '<hr style="margin:5px 0px;">';
+    };
+    {{layername}}Id = props.gridIndex;
+    setTimeout(function() {
+      mapLayers["{{layername}}"].setFeatureStyle({{layername}}Id, {
+        color: "goldenrod",
+        weight: 4
+      }, 100);
+      //map.openPopup(popup, latlng);
+      document.getElementById("mapLayerInfoWrapper").style.display = 'block';
+      document.getElementById("mapLayerInfo").innerHTML = popup;
+    });
+  })
+  map.on('popupclose', function() {
+    mapLayers["{{layername}}"].setFeatureStyle({{layername}}Id, {
+      color: {{layername}}Style.color,
+      weight: {{layername}}Style.weight,
+    });
+    document.getElementById("mapLayerInfoWrapper").style.display = 'none';
+  });
+  {% if layer.search and layer.search != "osm" %}
+  searchAndFit();
+  {% endif %}
+});
+{%else%}
+/* add normal leaflet layer*/
 mapLayers["{{layername}}"] = new L.geoJson(null, {
-  style: {
-    color: {% if layer.color %}"{{layer.color}}"{% else%}"skyblue"{%endif%},
-    fillColor: {% if layer.color %}"{{layer.fill}}"{% else%}"skyblue"{%endif%},
-    weight: {% if layer.weight %}{{layer.weight}}{% else%}4{%endif%}
-  },
+  style: {{layername}}Style,
   onEachFeature: function(feature, shape) {
     {% if layer.popup == 'all'%}/*test*/
     var popupText = "";
@@ -172,18 +252,35 @@ mapLayers["{{layername}}"] = new L.geoJson(null, {
   }
 }).addTo(map);
 
-componentHandler.upgradeAllRegistered();
 
-var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}', null, mapLayers["{{layername}}"]);//{{layer.fitBounds}}
-{% if layer.fit == true %}{{layername}}Data.on('ready', function() {
-  map.fitBounds({{layername}}Data.getBounds());
+var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}', null, mapLayers["{{layername}}"]);
+{{layername}}Data.on('ready', function() {
+  searchAndFit();
+})
+{%endif%}/*end vector grid if statement*/
+
+var clickedFeature = new L.GeoJSON(null, {
+  style: {
+    color:'goldenrod',
+    fillColor: 'transparent',
+    weight: 4,
+    interactive: false
+  },
+  onEachFeature: function(feature, layer) {
+    var props = layer.feature.properties;
+    showPopupCard(props)
+  }
+}).addTo(map);
+
+function searchAndFit() {
+  {% if layer.fit == true %}map.fitBounds({{layername}}Data.getBounds());{% endif %}
 
   {% if layer.search and layer.search != "osm" %}
 	document.getElementById('mapSearchControl').style.display = 'block';
-  var prop = 'Search ' + '{{layername}}';
+  var prop = 'Search ' + '{{layer.name}}';
   searchControl = new L.Control.Search({
     /*can only search one layer or layer group at a time*/
-    layer: mapLayers["{{layername}}"],
+    layer: {{layername}}Data,
     propertyName: "{{layer.search}}",
     container: "mapSearchControl",
     textPlaceholder: prop,
@@ -193,11 +290,12 @@ var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}', null, mapLayers
     minLength: 2,
     zoom:null,
     collapsed: false,
+    add: false
   }).addTo(map);
 
   searchControl.on("search:locationfound", function(e) {
     console.log(e);
-    e.layer.openPopup();
+    clickedFeature.addData(e.layer.feature);
 		map.flyToBounds(e.layer.getBounds());
     searchControl.collapse()
   });
@@ -205,12 +303,13 @@ var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}', null, mapLayers
     $('.search-tooltip').width($('.search-tooltip').parent().width());
   });
   {% endif %}
+}
 
-});{% endif %}
 {%endif%}
-//layerControl.addOverlay({{layername}}, "{{layer.name}}");
-{%endfor%}
-{%endif%}
+{%endfor%} /*end for loop layers */
+{%endif%}/* end if layer statement*/
+
+/*page.search*/
 {% if page.search == "osm" %}
 document.getElementById('mapSearchControl').style.display = 'block';
 searchControl = new L.Control.Search({
@@ -239,6 +338,15 @@ $("#searchtext16").on('change',function() {
   $('.search-tooltip').width($('.search-tooltip').parent().width());
 });
 {% endif %}
+
+$("#sidebar").on('click', "#maplayerInfoClose", function() {
+  document.getElementById("mapLayerInfoWrapper").style.display = 'none';
+  clickedFeature.clearLayers();
+});
+
+map.on('click', function() {
+  clickedFeature.clearLayers();
+});
 
 </script>
 

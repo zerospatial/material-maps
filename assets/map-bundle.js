@@ -7,6 +7,7 @@
 {% include assets/leaflet-fullscreen/Control.FullScreen.js %}
 {% include assets/leaflet-search/leaflet-search.src.js %}
 {% include assets/leaflet-hash.js %}
+{% include assets/Leaflet.VectorGrid.bundled.min.js %}
 /*
 * Reveal custom layer control
 */
