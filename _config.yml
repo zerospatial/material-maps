@@ -4,6 +4,10 @@ title: Material Maps
 
 exclude: ["Gemfile", "Gemfile.lock"]
 
+#compress settings remove blank lines
+compress_html:
+  blanklines: true
+
 #Jekyll ignores folders with underscores unless otherwise noted
 collections:
   maps:
@@ -11,17 +15,22 @@ collections:
 
 defaults:
   - scope:
-      path: ""
-      type: maps
+      type: "posts"
     values:
       layout: default
-      type: map
       permalink: /maps/:title/
+      map: true
+      subtitle: this is a subtitle
+      basemap: contrast
+      tags: services
+      image: counties.jpg
+      center: "[39, -83.4]"
+      zoom: 14
 
 # Prose.io Config File
 prose:
   siteurl: "https://ovrdc.github.io/material-maps/"
-  media: "/_maps/images/"
+  media: "/assets/post-images/"
   metadata:
     "":
       - name: "basemap"
@@ -30,6 +39,6 @@ prose:
           label: Basemap
           options:
             - name: "Dark"
-              value: dark
+              value: contrast
             - name: "Streets"
               value: streets

@@ -249,9 +249,15 @@ input:focus, textarea:focus {
     margin: 8px auto;
   }
 }
-@media screen and (max-width: 1343px) and (min-width: 844px) {
+@media screen and (max-width: 1343px) and (min-width: 1024px) {
   .mdl-card--square {
     width: 31%;
+    margin: 8px auto;
+  }
+}
+@media screen and (max-width: 1023px) and (min-width: 480px) {
+  .mdl-card--square {
+    width: 30%;
     margin: 8px auto;
   }
 }

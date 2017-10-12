@@ -1,3 +1,6 @@
+---
+layout: compress
+---
 <!doctype html>
 {% if page.framework == 'calcite' %}{% else %}{% include material-license.html %}{% endif %}
 <html lang="en">
@@ -31,7 +34,7 @@
     {% if page.type == "gallery" %}
     <link rel="stylesheet" href="{{site.baseurl}}/assets/ui-style.css" />
     {% endif %}
-    {% if page.type == 'map'%}
+    {% if page.map == true%}
     <link rel="stylesheet" href="{{site.baseurl}}/assets/map-style.css" />
     {%endif%}
   </head>
@@ -42,7 +45,7 @@
             <span id="navTitle" class="mdl-layout-title">{{page.title}}</span>
             <div class="mdl-layout-spacer"></div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-            {% if page.type == "map" %}
+            {% if page.map == true %}
             <!--button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
               <i class="material-icons">layers</i>
             </button>
@@ -60,9 +63,14 @@
           <header class="demo-drawer-header">
             <div id="map-sidebar--title"><h4>{{page.title}}</h4></div>
             <div class="demo-avatar-dropdown">
-              <span class="mdl-color-text--grey-600">Map Links</span>
+              {% if page.map == true %}
+              <span class="mdl-color-text--grey-600">
+                <!--i class="mdl-color-text--indigo-A500 material-icons"
+                role="presentation">reply</i-->
+                <a class="mdl-color-text--indigo-A500" href="{% if site.baseurl != "" %}{{site.baseurl}}{% else %}/{%endif%}"><em>Return to Map Gallery</em></a></span>
+              {% else %}<br />{% endif %}
               <div class="mdl-layout-spacer"></div>
-              <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+              <!--button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                 <i class="material-icons" role="presentation">arrow_drop_down</i>
                 <span class="visuallyhidden">Accounts</span>
               </button>
@@ -70,58 +78,31 @@
                 <a href="{{site.baseurl}}/" class="mdl-menu__item mdl-js-ripple-effect"><li>Gallery</li></a>
                 <a href="{{site.baseurl}}/" class="mdl-menu__item mdl-js-ripple-effect"><li>Gallery</li></a>
                 <a href="{{site.baseurl}}/" class="mdl-menu__item mdl-js-ripple-effect"><li>Gallery</li></a>
-              </ul>
+              </ul-->
             </div>
           </header>
           <div class="mdl-color-text--primary mdl-typography--text-center">
           </div>
           <nav id="sidebar" class="demo-navigation mdl-navigation mdl-color--white mdl-color-text--grey-900">
             {% if page.type == 'gallery' %}{% include gallery-sidebar-nav.html %}{% endif %}
-            {% if page.type == 'map' %}{% include map-sidebar-nav.html %}{% endif %}
+            {% if page.map == true %}{% include map-sidebar-nav.html %}{% endif %}
             <div class="mdl-layout-spacer"></div>
             <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
           </nav>
         </div>
         <main class="mdl-layout__content mdl-color--grey-100">
-          {% if page.type == 'map' %}<div id="map"></div>{% endif %}
-          {% if page.type == 'gallery' %}
-          <div class="mdl-grid demo-content">
-            {%for map in site.maps%}
-            <div class="demo-updates mdl-card mdl-card--square mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet app{% if map.tags %}{% for tag in map.tags %} {{ tag }}{% endfor %}{% endif %}">
-                <a href="{{map.url | prepend:site.baseurl}}">
-                  <div class="mdl-card__title mdl-card--expand mdl-color--teal-300" style="background-image:url(maps/images/{{map.image}})">
-                  </div>
-                </a>
-              <div class="mdl-card__actions">
-                <span class="mdl-card__title-text">{{map.title}}</span>
-              </div>
-              <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-                {% if map.subtitle %}{{map.subtitle | limit:50}}{% else %}<br><br>{% endif %}
-              </div>
-              <div class="mdl-card__actions mdl-card--border">
-                <a href="{{map.url | prepend:site.baseurl}}" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>
-              </div>
-            </div>
-            {%endfor%}
-          </div>
+        {% if page.map == true %}
+          <div id="map"></div>
+        {% endif %}
+        {% if page.type == 'gallery' %}{% include gallery-list.html %}{% endif %}
         </main>
       </div>
+      {% if page.type == 'gallery' %}
       <script src="{{site.baseurl}}/assets/gallery-bundle.js"></script>
-      <script>
-      $('.filter').click(function() {
-        var id = $(this).attr('id');
-        $('.' + id).fadeIn();
-        $('.app').not('.' + id).hide();
-      });
-
-      $('#reset').click(function() {
-        $('.app').fadeIn();
-      });
-      </script>
       {% endif %}
-      {% if page.type == "map" %}
+      {% if page.map == true %}
       <script src="{{site.baseurl}}/assets/map-bundle.js"></script>
-      {% include {{page.type}}.html %}
+      {% include map.html %}
       {% endif %}
     </body>
 </html>

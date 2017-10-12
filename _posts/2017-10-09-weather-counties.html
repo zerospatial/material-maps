@@ -1,7 +1,7 @@
 ---
-title: Services Map
+title: Weather & Counties
 basemap: contrast
-tags: services
+tags: weather
 image: counties.jpg
 #map options
 center: "[39, -83.4]"
@@ -10,6 +10,7 @@ layers:
   - name: Counties #no hyphens or special characters, written as you want it in the legend
     shape: polygon
     type: topojson
+    vectorgrid: true
     url: ../../assets/data/counties.topojson
     color: red
     weight: 1

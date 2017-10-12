@@ -85,7 +85,8 @@ var map = new L.map('map', {
 });
 
 L.hash(map);
-
+map.createPane('tilepane');
+map.getPane('tilepane').style.zindex = 190;
 var basemaps = []
 
 basemaps["streets"] = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -170,6 +171,8 @@ function showPopupCard(props) {
 
 {% if layer.vectorgrid == true %}
 /*vector grid instead of normal leaflet layer*/
+map.createPane('vtpane');
+map.getPane('vtpane').style.zindex = 240;
 var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}');
 {{layername}}Data.on('ready', function() {
   var {{layername}}GeoJSON = {{layername}}Data.toGeoJSON();
@@ -188,7 +191,8 @@ var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}');
     interactive: true,
     getFeatureId: function(f) {
       return f.properties.gridIndex
-    }
+    },
+    pane: 'vtpane'
   }).addTo(map);
 
   mapLayers["{{layername}}"].on('click', function(e) {

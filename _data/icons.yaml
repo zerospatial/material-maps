@@ -1,0 +1,15 @@
+- name: services
+  icon: "account_balance"
+  color: indigo-A700
+
+- name: construction
+  icon: warning
+  color: orange-A700
+
+- name: recreation
+  icon: terrain
+  color: green-A700
+
+- name: weather
+  icon: cloud
+  color: light-blue-A700
