@@ -1,8 +1,7 @@
 ---
 ---
-{% include assets/material-dashboard/material.indigo-red.min.css %}
-{% include assets/material-dashboard/styles.css %}
+{% include vendor/material-dashboard/material.indigo-red.min.css %}
+{% include vendor/material-dashboard/styles.css %}
 {% include node_modules/leaflet/dist/leaflet.css %}
-{% include assets/leaflet-fullscreen/Control.FullScreen.css %}
-{% include assets/leaflet-search/leaflet-search.min.css %}
-{% include assets/custom-styles.css %}
+{% include vendor/leaflet-fullscreen/Control.FullScreen.css %}
+{% include vendor/leaflet-search/leaflet-search.min.css %}

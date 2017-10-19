@@ -1,14 +1,6 @@
 ---
 layout: compress
 ---
-{% include assets/jquery-3.1.1.min.js %}
-{% include assets/material-dashboard/material.min.js %}
-$('.filter').click(function() {
-  console.log('test');
-  var id = $(this).attr('id');
-  $('.' + id).fadeIn();
-  $('.app').not('.' + id).hide();
-});
-$('#reset').click(function() {
-  $('.app').fadeIn();
-});
+{% include vendor/jquery-3.1.1.min.js %}
+{% include vendor/material-dashboard/material.min.js %}
+{% include custom/md-gallery--filter.js %}

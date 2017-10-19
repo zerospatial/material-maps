@@ -1,5 +1,5 @@
 ---
 ---
-{% include assets/material-dashboard/material.indigo-red.min.css %}
-{% include assets/material-dashboard/styles.css %}
-{% include assets/custom-styles.css %}
+{% include vendor/material-dashboard/material.indigo-blue.min.css %}
+{% include vendor/material-dashboard/styles.css %}
+{% include custom/md-styles.css %}

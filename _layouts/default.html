@@ -2,7 +2,7 @@
 layout: compress
 ---
 <!doctype html>
-{% if page.framework == 'calcite' %}{% else %}{% include material-license.html %}{% endif %}
+{% if page.framework == 'calcite' %}{% else %}{% include elements/material-license.html %}{% endif %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -37,6 +37,9 @@ layout: compress
     {% if page.map == true%}
     <link rel="stylesheet" href="{{site.baseurl}}/assets/map-style.css" />
     {%endif%}
+    <style>
+    {% include custom/md-styles.css %}
+    </style>
   </head>
     <body>
       <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
@@ -46,15 +49,29 @@ layout: compress
             <div class="mdl-layout-spacer"></div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
             {% if page.map == true %}
-            <!--button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
-              <i class="material-icons">layers</i>
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon md__vert-button" id="hdrbtn">
+              <i class="material-icons">more_vert</i>
             </button>
-            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
-              <li class="mdl-menu__item">Streets</li>
-              <li class="mdl-menu__item">Light</li>
-              <li class="mdl-menu__item">Dark</li>
-              <li class="mdl-menu__item">Satellite</li>
-            </ul-->
+            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right mdl-list" for="hdrbtn">
+              <li class="mdl-list__item mdl-menu__item mdl-js-ripple-effect">
+                <span class="mdl-list__item-primary-content mdl-color-text--black">
+                <i class="material-icons mdl-list__item-icon mdl-color-text--black">share</i>
+                Share
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-menu__item mdl-js-ripple-effect">
+                <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon mdl-color-text--black">print</i>
+                Print
+              </span>
+              </li>
+              <li class="mdl-list__item mdl-menu__item mdl-js-ripple-effect">
+                <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon mdl-color-text--black">info</i>
+                About
+              </span>
+              </li>
+            </ul>
             {% endif %}
           </div>
         </header>
@@ -84,17 +101,22 @@ layout: compress
           <div class="mdl-color-text--primary mdl-typography--text-center">
           </div>
           <nav id="sidebar" class="demo-navigation mdl-navigation mdl-color--white mdl-color-text--grey-900">
-            {% if page.type == 'gallery' %}{% include gallery-sidebar-nav.html %}{% endif %}
-            {% if page.map == true %}{% include map-sidebar-nav.html %}{% endif %}
-            <div class="mdl-layout-spacer"></div>
-            <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
+            {% if page.type == 'gallery' %}{% include elements/gallery-sidebar-nav.html %}{% endif %}
+            {% if page.map == true %}{% include elements/map-sidebar-nav.html %}{% endif %}
+            <div class="mdl-layout-spacer">&nbsp;</div>
+            <!--ABout this Map Card-->
+            <div class="mdl-typography--text-center mdl-color--grey-100">
+              <button id="map-about--btn" type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary">
+                  <i class="material-icons">help</i>
+              </button>
+            </div>
           </nav>
         </div>
         <main class="mdl-layout__content mdl-color--grey-100">
         {% if page.map == true %}
           <div id="map"></div>
         {% endif %}
-        {% if page.type == 'gallery' %}{% include gallery-list.html %}{% endif %}
+        {% if page.type == 'gallery' %}{% include elements/gallery-list.html %}{% endif %}
         </main>
       </div>
       {% if page.type == 'gallery' %}
@@ -102,7 +124,8 @@ layout: compress
       {% endif %}
       {% if page.map == true %}
       <script src="{{site.baseurl}}/assets/map-bundle.js"></script>
-      {% include map.html %}
+      <script>{% include elements/map.js %}</script>
+      {{content}}
       {% endif %}
     </body>
 </html>

@@ -1,5 +1,3 @@
-<script>
-
 /*
 * Custom map layer control
 */
@@ -351,7 +349,3 @@ $("#sidebar").on('click', "#maplayerInfoClose", function() {
 map.on('click', function() {
   clickedFeature.clearLayers();
 });
-
-</script>
-
-{{content}}
