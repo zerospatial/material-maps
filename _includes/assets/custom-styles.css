@@ -67,6 +67,12 @@ button.md-reveal--title  {
   letter-spacing: .02em;
   padding:12px;
 }
+.md-reveal--icon {
+  position: absolute;
+  right:6px;
+  margin-top:11px;
+  color: lightgray;
+}
 .md-reveal--title {
   border-top: solid 1px #eee;
   padding:8px;
@@ -270,4 +276,9 @@ input:focus, textarea:focus {
   .leaflet-control-search.search-exp.leaflet-control {
     width: 100%;
   }
+}
+.rotate-90 {
+  -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+          transform: rotate(90deg);
 }
