@@ -1,0 +1,25 @@
+var getQuery = function(q) {
+  if (q) {
+    var params = {},
+      queries, temp, i, l;
+    /* Split into key/value pairs*/
+    queries = q.split("&");
+    /* Convert the array of strings into an object*/
+    for (i = 0, l = queries.length; i < l; i++) {
+      temp = queries[i].split('=');
+      params[temp[0]] = temp[1];
+    }
+    return params;
+  }
+};
+var query = getQuery((window.location.search).substring(1));
+if (query) {
+  var debug = query.debug;
+}else{var debug = false}
+if(debug === "true"){}else{
+  if(!window.console) window.console = {};
+  var methods = ["log", "debug", "warn", "info"];
+  for(var i=0;i<methods.length;i++){
+    console[methods[i]] = function(){};
+  }
+}

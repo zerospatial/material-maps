@@ -260,6 +260,10 @@ input:-ms-input-placeholder {
 #mm-header--menu-horiz {
   display: none;
 }
+#mm-header--menu .mdl-button {
+  min-width: 20px;
+  padding: 0 10px;
+}
 @media screen and (min-width: 600px) {
   #mm-header--menu-horiz {
     display: block;
@@ -288,7 +292,7 @@ input:-ms-input-placeholder {
 .mdl-layout__header .md__vert-button {
   top:5px;
   position: absolute;
-  right:14px;
+  right:7px;;
 }
 .mdl-layout__header-row .mdl-menu__container.is-visible,
 .mdl-layout__header-row .mdl-menu__container.is-animating {
@@ -429,7 +433,7 @@ input:focus, textarea:focus {
   margin: 8px 0;
 }
 .mdl-layout__header-row {
-  padding: 0 0 0 50px!important;
+  padding: 2px 0 0 55px!important;
 }
 .demo-avatar-dropdown .demo-drawer .mdl-menu__container {
   z-index: auto;
@@ -483,4 +487,96 @@ input:focus, textarea:focus {
     margin: 8px auto;
   }
 }
+/* custom modal*/
+.mm-modal {
+  position: absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  width:100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999;
+  display: none;
+  overflow-y: auto;
+}
+.mm-modal-inner {
+  position: absolute;
+  top: 5%;
+  width: 100%;
+  transform: none;
+  -webkit-transform: none;
+  -ms-transform: none;
+}
+@media screen and (min-width:481px) {
+  .mm-modal-inner {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -40%);
+    -webkit-transform: translate(-50%, -40%);
+    -ms-transform: translate(-30%, -40%);
+  }
+}
+.mm-modal-inner .mdl-card {
+  overflow-y: auto;
+  max-height: 50%;
+  height: 50%;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 480px;
+}
+.mm-modal-inner .mdl-card__supporting-text {
+  line-height: inherit;
+}
+/* end custom modal*/
+/* info window */
+/*info box for layer information in maps*/
+#mm-info-box {
+  z-index: 9999;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: auto;
+  display: none;
+  overflow-y: auto;
+  max-height:90%;
+  height:auto;
+  max-width: 35%;
+}
+@media screen and (max-width:768px) {
+  #mm-info-box {
+    max-width: 100%;
+  }
+}
+#mm-info-box .mdl-card__supporting-text {
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 1.3rem;
+  line-height: 20px;
+}
+#mm-info-box .mdl-card__title {
+  margin-right: 40px;
+}
+/*material tables for popups*/
+#mm-info-box .mdl-data-table tbody tr {
+  height: auto;
+}
+#mm-info-box .mdl-data-table td:first-of-type {
+  padding:5px 5px 5px 10px;
+  text-align: left;
+}
+#mm-info-box .mdl-data-table td:last-of-type {
+  padding:5px 10px 5px 5px;
+}
+#mm-info-box .mdl-data-table tbody tr td {
+  height:auto!important;
+}
+#mm-info-box. mdl-data-table mdl-js-data-table tr {
+  height:auto;
+}
+#mm-info-box .mdl-data-table td {
+  height: auto;
+  padding: 10px;
+}
+/* end info window */
 

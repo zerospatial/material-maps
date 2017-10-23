@@ -52,13 +52,12 @@ layout: compress
                 <button class="mdl-button mdl-js-button">
                   <i class="material-icons">print</i>
                 </button>
-                <button class="mdl-button mdl-js-button">
+                <button id="aboutbtn1" class="mdl-button mdl-js-button">
                   <i class="material-icons">info</i>
                 </button>
               </div>
               <div id="mm-header--menu-vert" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-              {% if page.map == true %}
-              <button id="vertbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon md__vert-button">
+              <button id="vertbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect md__vert-button">
                 <i class="material-icons">more_vert</i>
               </button>
               <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right mdl-list" for="vertbtn">
@@ -81,7 +80,6 @@ layout: compress
                 </span>
                 </li>
               </ul>
-            {% endif %}
             </div>
           </div>
         </header>
@@ -127,12 +125,47 @@ layout: compress
             </div>
           </nav>
         </div>
+        <div id="mm-info-box" class="mdl-cell mdl-card mdl-shadow--3dp">
+          <div class="mdl-card__title">
+             <span class="mdl-card__title-text"></span>
+          </div>
+          <div id="map-layer--info-txt" class="mdl-card__supporting-text mdl-typography--font-light mdl-typography--subhead">&nbsp;</div>
+          <div id="map-layer--info-footer" class="mdl-card__actions mdl-card--border" style="display:none;">
+          </div>
+          <div class="mdl-card__menu">
+            <button id="card01close" class="map-layer--info-close mdl-button mdl-js-button mdl-js-ripple-effect">
+              <i class="material-icons">close</i>
+            </button>
+          </div>
+        </div>
         <main id="mm-content" class="mdl-layout__content mdl-color--grey-100">
         {% if page.map == true %}
           <div id="map"></div>
         {% endif %}
         {% if page.type == 'gallery' %}{% include elements/gallery-list.html %}{% endif %}
         </main>
+        <div class="mm-modal">
+          <div class="mm-modal-inner">
+            <div class="mdl-card mdl-shadow--2dp">
+              <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">{{page.title}}</h2>
+              </div>
+              <div class="mdl-card__supporting-text">
+                {{page.modal.text}}
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mm-modal--close">
+                  Close
+                </a>
+              </div>
+              <div class="mdl-card__menu">
+                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect mm-modal--close">
+                  <i class="material-icons">close</i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       {% if page.type == 'gallery' %}
       <script src="{{site.baseurl}}/assets/gallery-bundle.js"></script>
@@ -141,5 +174,23 @@ layout: compress
       <script src="{{site.baseurl}}/assets/map-bundle-{{page.api}}.js"></script>
       <script>{% include elements/mm-map.js %}</script>
       {% endif %}
+      <script>
+      $(".mm-modal").on('click', '.mm-modal--close', function() {
+        $(".mm-modal").fadeOut();;
+      });
+      $("#aboutbtn1").click(function() {
+        $(".mm-modal").fadeIn();
+      });
+      $(".map-layer--info-close").click(function() {
+        $("#mm-info-box").fadeOut();
+      });
+      {% if page.modal.show == true %}
+      var modalshown = localStorage.getItem('modalshown');
+      if (modalshown == null) {
+        localStorage.setItem('modalshown', 1);
+        $(".mm-modal").fadeIn("slow");
+      }
+      {% endif %}
+      </script>
     </body>
 </html>

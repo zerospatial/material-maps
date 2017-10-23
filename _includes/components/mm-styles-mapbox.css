@@ -1,5 +1,5 @@
 /*global customizations*/
-*{font-family: 'Montserrat', sans-serif;}
+/*{font-family: 'Montserrat', sans-serif;}*/
 html, body {
   height:100%
 }
@@ -23,49 +23,12 @@ h5, h6 {
 .mdl-spinner__circle {
   border-width: 9px;
 }
+#mm-header--menu-horiz .mdl-button {
+  min-width: auto;
+}
 {% if page.theme == 'light' %}hr {border-top: 2px solid rgba(0,0,0,.1);}
 {% else %}hr {border-top: 2px solid rgba(0,0,0,.1);}{% endif %}
-.ovrdc-modal {
-  position: absolute;
-  top:0;
-  bottom:0;
-  left:0;
-  width:100%;
-  background: rgba(0,0,0,0.5);
-  z-index: 9999;
-  display: none;
-  overflow-y: auto;
-}
-.ovrdc-modal-inner {
-  position: absolute;
-  top: 5%;
-  width: 100%;
-  transform: none;
-  -webkit-transform: none;
-  -ms-transform: none;
-}
-@media screen and (min-width:481px) {
-  .ovrdc-modal-inner {
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    width: 100%;
-    transform: translate(-50%, -40%);
-    -webkit-transform: translate(-50%, -40%);
-    -ms-transform: translate(-30%, -40%);
-  }
-}
-.ovrdc-modal-inner .mdl-card {
-  overflow-y: auto;
-  max-height: 50%;
-  height: 50%;
-  margin: 0 auto;
-  width: 90%;
-  max-width: 480px;
-}
-.ovrdc-modal-inner .mdl-card__supporting-text {
-  line-height: inherit;
-}
+
 .mdl-layout__title, .mdl-layout-title, h1, h2, h3, h4 {font-family: 'Open Sans', sans-serif;}
 .mdl-layout__header-row {
   padding-right: 20px;
@@ -79,11 +42,13 @@ h5, h6 {
 .demo-drawer-header h1, h2, h3, h4 {
   margin-top:0;
 }
+.mdl-layout__drawer-button:hover {
+  background-color: rgba(158,158,158,.2);
+}
 .mdl-layout__drawer-button {
-  line-height: 37px;
+  /*line-height: 37px;
   height: 30px;
   width: 30px;
-  /*border: thin solid white;*/
   margin: 0;
   position: absolute;
   top:10px;
@@ -91,7 +56,7 @@ h5, h6 {
   color: black;
   background-color: white;
   border-radius: 2px;
-  box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.12),0 1px 1px 0 rgba(0,0,0,.24);
+  box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.12),0 1px 1px 0 rgba(0,0,0,.24);*/
 }
 .mdl-layout__drawer {
   overflow-x: hidden;
@@ -185,53 +150,6 @@ h5, h6 {
 .mdl-button--icon .mdl-button__ripple-container {
   border-radius: 0;
 }
-/*info box for layer information in maps*/
-#map-layer--info-box {
-  z-index: 9999;
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  width: auto;
-  display: none;
-  overflow-y: auto;
-  max-height:90%;
-  height:auto;
-  max-width: 35%;
-}
-@media screen and (max-width:768px) {
-  #map-layer--info-box {
-    max-width: 100%;
-  }
-}
-#map-layer--info-box .mdl-card__supporting-text {
-  color: rgba(0, 0, 0, 0.7);
-  font-size: 1.3rem;
-  line-height: 20px;
-}
-#map-layer--info-box .mdl-card__title {
-  margin-right: 40px;
-}
-/*material tables for popups*/
-#map-layer--info-box .mdl-data-table tbody tr {
-  height: auto;
-}
-#map-layer--info-box .mdl-data-table td:first-of-type {
-  padding:5px 5px 5px 10px;
-  text-align: left;
-}
-#map-layer--info-box .mdl-data-table td:last-of-type {
-  padding:5px 10px 5px 5px;
-}
-#map-layer--info-box .mdl-data-table tbody tr td {
-  height:auto!important;
-}
-#map-layer--info-box. mdl-data-table mdl-js-data-table tr {
-  height:auto;
-}
-#map-layer--info-box .mdl-data-table td {
-  height: auto;
-  padding: 10px;
-}
 #map-layer--info-txt {
   width:92%
 }
@@ -321,7 +239,7 @@ h5, h6 {
 }
 
 @media screen and (max-width: 420px) {
-  #map-layer--info-box {
+  #mm-info-box {
     width:95%;
   }
   .mdl-data-table {
@@ -331,7 +249,10 @@ h5, h6 {
 }
 
 /* mapbox custom css */
-
+.mapboxgl-ctrl-group > button {
+  width: 36px;
+  height: 37px;
+}
 .mapboxgl-popup-close-button:hover {
   background-color: white;
   opacity: 1;
@@ -346,10 +267,10 @@ h5, h6 {
   height: 34px;
   width: 34px;
 }
-.mapboxgl-canvas-container.mapboxgl-interactive,
+/*.mapboxgl-canvas-container.mapboxgl-interactive,
 .mapboxgl-ctrl-nav-compass {
   cursor:pointer;
-}
+}*/
 /*mapbox customizations*/
 /*@media screen and (max-width: 768px) {
   .mapboxgl-ctrl.mapboxgl-ctrl-attrib {
@@ -370,9 +291,9 @@ h5, h6 {
 .mapboxgl-ctrl-attrib a {
   color: rgb(64,196,255);
 }
-.mapboxgl-ctrl-top-right {
+/*.mapboxgl-ctrl-top-right {
   top: 40px;
-}
+}*/
 .mapboxgl-ctrl-group {
   border-radius: 2px;
   box-shadow: 0 3px 4px 0 rgba(0,0,0,.14),0 3px 3px -2px rgba(0,0,0,.2),0 1px 8px 0 rgba(0,0,0,.12);

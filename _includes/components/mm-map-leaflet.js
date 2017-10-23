@@ -151,8 +151,8 @@ function showPopupCard(props) {
     var v = String(props[k]);
     popup += '<strong>' + k + '</strong><br>' + v + '<br>' + '<hr style="margin:5px 0px;">';
   };
-  document.getElementById("mapLayerInfoWrapper").style.display = 'block';
-  document.getElementById("mapLayerInfo").innerHTML = popup;
+  document.getElementById("mm-info-box").style.display = 'block';
+  document.getElementById("map-layer--info-txt").innerHTML = popup;
 }
 
 {% if layer.vectorgrid == true %}
@@ -208,8 +208,8 @@ var {{layername}}Data = omnivore.{{layer.type}}('{{layer.url}}');
         weight: 4
       }, 100);
       //map.openPopup(popup, latlng);
-      document.getElementById("mapLayerInfoWrapper").style.display = 'block';
-      document.getElementById("mapLayerInfo").innerHTML = popup;
+      document.getElementById("mm-info-box").style.display = 'block';
+      document.getElementById("map-layer--info-txt").innerHTML = popup;
     });
   })
   map.on('popupclose', function() {

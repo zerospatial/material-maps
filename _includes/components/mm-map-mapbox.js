@@ -150,10 +150,10 @@ function buildMap() {
 
   {% if page.inspect == true %}
   map.addControl(new MapboxInspect({
-    popup: new mapboxgl.Popup({
-      closeButton: false,
-      closeOnClick: false
-    })
+    showInspectButton: true,
+    showMapPopup: true,
+    showMapPopupOnHover: false,
+    showInspectMapPopupOnHover: false
   }));
   {% endif %}
   /* the code below is handled by mapbox-gl-inspect for now*/

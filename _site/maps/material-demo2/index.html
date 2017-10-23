@@ -22,7 +22,7 @@
     <!-- Material Dashboard theme and fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Montserrat|Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <!--see https://getmdl.io/customize/ for many other color themes-->
-    <link rel="stylesheet" href="/material-maps/assets/map-styles-leaflet.css" />
+    <link rel="stylesheet" href="/assets/map-styles-leaflet.css" />
   </head>
     <body>
       <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
@@ -38,12 +38,12 @@
                 <button class="mdl-button mdl-js-button">
                   <i class="material-icons">print</i>
                 </button>
-                <button class="mdl-button mdl-js-button">
+                <button id="aboutbtn1" class="mdl-button mdl-js-button">
                   <i class="material-icons">info</i>
                 </button>
               </div>
               <div id="mm-header--menu-vert" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-              <button id="vertbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon md__vert-button">
+              <button id="vertbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect md__vert-button">
                 <i class="material-icons">more_vert</i>
               </button>
               <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right mdl-list" for="vertbtn">
@@ -77,7 +77,7 @@
               <span class="mdl-color-text--grey-600">
                 <!--i class="mdl-color-text--indigo-A500 material-icons"
                 role="presentation">reply</i-->
-                <a class="mdl-color-text--indigo-A500" href="/material-maps">
+                <a class="mdl-color-text--indigo-A500" href="/">
                   <button class="mdl-button mdl-js-button mdl-color-text--grey-600">
                   <i class="material-icons">arrow_back</i> Return to Map Gallery
                   </button>
@@ -89,9 +89,9 @@
                 <span class="visuallyhidden">Accounts</span>
               </button>
               <ul id="map-sidebar--link-menu" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-                <a href="/material-maps/" class="mdl-menu__item mdl-js-ripple-effect"><li>Gallery</li></a>
-                <a href="/material-maps/" class="mdl-menu__item mdl-js-ripple-effect"><li>Gallery</li></a>
-                <a href="/material-maps/" class="mdl-menu__item mdl-js-ripple-effect"><li>Gallery</li></a>
+                <a href="/" class="mdl-menu__item mdl-js-ripple-effect"><li>Gallery</li></a>
+                <a href="/" class="mdl-menu__item mdl-js-ripple-effect"><li>Gallery</li></a>
+                <a href="/" class="mdl-menu__item mdl-js-ripple-effect"><li>Gallery</li></a>
               </ul-->
             </div>
           </header>
@@ -189,11 +189,45 @@
             </div>
           </nav>
         </div>
+        <div id="mm-info-box" class="mdl-cell mdl-card mdl-shadow--3dp">
+          <div class="mdl-card__title">
+             <span class="mdl-card__title-text"></span>
+          </div>
+          <div id="map-layer--info-txt" class="mdl-card__supporting-text mdl-typography--font-light mdl-typography--subhead">&nbsp;</div>
+          <div id="map-layer--info-footer" class="mdl-card__actions mdl-card--border" style="display:none;">
+          </div>
+          <div class="mdl-card__menu">
+            <button id="card01close" class="map-layer--info-close mdl-button mdl-js-button mdl-js-ripple-effect">
+              <i class="material-icons">close</i>
+            </button>
+          </div>
+        </div>
         <main id="mm-content" class="mdl-layout__content mdl-color--grey-100">
           <div id="map"></div>
         </main>
+        <div class="mm-modal">
+          <div class="mm-modal-inner">
+            <div class="mdl-card mdl-shadow--2dp">
+              <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Counties</h2>
+              </div>
+              <div class="mdl-card__supporting-text">
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mm-modal--close">
+                  Close
+                </a>
+              </div>
+              <div class="mdl-card__menu">
+                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect mm-modal--close">
+                  <i class="material-icons">close</i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <script src="/material-maps/assets/map-bundle-leaflet.js"></script>
+      <script src="/assets/map-bundle-leaflet.js"></script>
       <script>/* move to layout??*/
 $(function() {
   /*
@@ -359,8 +393,8 @@ function showPopupCard(props) {
     var v = String(props[k]);
     popup += '<strong>' + k + '</strong><br>' + v + '<br>' + '<hr style="margin:5px 0px;">';
   };
-  document.getElementById("mapLayerInfoWrapper").style.display = 'block';
-  document.getElementById("mapLayerInfo").innerHTML = popup;
+  document.getElementById("mm-info-box").style.display = 'block';
+  document.getElementById("map-layer--info-txt").innerHTML = popup;
 }
 /* add normal leaflet layer*/
 mapLayers["Counties"] = new L.geoJson(null, {
@@ -429,5 +463,16 @@ map.on('click', function() {
 });
 });
 </script>
+      <script>
+      $(".mm-modal").on('click', '.mm-modal--close', function() {
+        $(".mm-modal").fadeOut();;
+      });
+      $("#aboutbtn1").click(function() {
+        $(".mm-modal").fadeIn();
+      });
+      $(".map-layer--info-close").click(function() {
+        $("#mm-info-box").fadeOut();
+      });
+      </script>
     </body>
 </html>

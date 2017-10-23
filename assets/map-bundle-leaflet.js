@@ -1,6 +1,7 @@
 ---
 ---
 {% include vendor/jquery-3.1.1.min.js %}
+{% include components/mtm-getQuery.js %}
 {% include node_modules/leaflet/dist/leaflet.js %}
 {% include vendor/leaflet-omnivore.min.js %}
 {% include vendor/material-dashboard/material.min.js %}
