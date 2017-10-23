@@ -1,0 +1,47 @@
+/* mapbox custom css */
+
+.mapboxgl-popup-close-button:hover {
+  background-color: white;
+  opacity: 1;
+  padding: 0px 8px;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.mapboxgl-popup-close-button {
+  right: -10px;
+  top: -10px;
+  border-radius: inherit;
+  height: 34px;
+  width: 34px;
+}
+.mapboxgl-canvas-container.mapboxgl-interactive,
+.mapboxgl-ctrl-nav-compass {
+  cursor:pointer;
+}
+/*mapbox customizations*/
+/*@media screen and (max-width: 768px) {
+  .mapboxgl-ctrl.mapboxgl-ctrl-attrib {
+    display: none;
+  }
+}*/
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib {
+  background: dimgray;
+  color: lightgray;
+  font-size: 11px;
+  text-align: center;
+  opacity: 0.8;
+  border-top-left-radius: 2px;
+}
+.mapboxgl-ctrl-attrib.compact {
+  padding-right: 26px;
+}
+.mapboxgl-ctrl-attrib a {
+  color: rgb(64,196,255);
+}
+.mapboxgl-ctrl-top-right {
+  top: 40px;
+}
+.mapboxgl-ctrl-group {
+  border-radius: 2px;
+  box-shadow: 0 3px 4px 0 rgba(0,0,0,.14),0 3px 3px -2px rgba(0,0,0,.2),0 1px 8px 0 rgba(0,0,0,.12);
+}

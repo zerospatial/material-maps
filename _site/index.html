@@ -1,0 +1,228 @@
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+      https://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Map Gallery</title>
+    <!-- Material Dashboard theme and fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Montserrat|Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <!--see https://getmdl.io/customize/ for many other color themes-->
+    <link rel="stylesheet" href="/material-maps/assets/ui-styles.css" />
+  </head>
+    <body>
+      <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+        <header id="mm-header" class="demo-header mdl-layout__header mdl-color--white mdl-color-text--grey-900">
+          <div class="mdl-layout__header-row">
+            <span id="navTitle" class="mdl-layout-title"><h5>Map Gallery</h5></span>
+            <!--div class="mdl-layout-spacer"></div-->
+            <div id="mm-header--menu">
+              <div id="mm-header--menu-horiz">
+                <button class="mdl-button mdl-js-button">
+                  <i class="material-icons">share</i>
+                </button>
+                <button class="mdl-button mdl-js-button">
+                  <i class="material-icons">print</i>
+                </button>
+                <button class="mdl-button mdl-js-button">
+                  <i class="material-icons">info</i>
+                </button>
+              </div>
+              <div id="mm-header--menu-vert" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+            </div>
+          </div>
+        </header>
+        <!--div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50"-->
+        <div id="mm-sidebar--wrapper" class="demo-drawer mdl-layout__drawer mdl-color--grey-100 mdl-color-text--grey-900">
+          <header class="demo-drawer-header">
+            <div id="map-sidebar--title"><h4>Map Gallery</h4></div>
+            <div class="demo-avatar-dropdown">
+              <br />
+              <div class="mdl-layout-spacer"></div>
+              <!--button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                <i class="material-icons" role="presentation">arrow_drop_down</i>
+                <span class="visuallyhidden">Accounts</span>
+              </button>
+              <ul id="map-sidebar--link-menu" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+                <a href="/material-maps/" class="mdl-menu__item mdl-js-ripple-effect"><li>Gallery</li></a>
+                <a href="/material-maps/" class="mdl-menu__item mdl-js-ripple-effect"><li>Gallery</li></a>
+                <a href="/material-maps/" class="mdl-menu__item mdl-js-ripple-effect"><li>Gallery</li></a>
+              </ul-->
+            </div>
+          </header>
+          <div class="mdl-color-text--primary mdl-typography--text-center">
+          </div>
+          <nav id="sidebar" class="demo-navigation mdl-navigation mdl-color--white mdl-color-text--grey-900">
+<div class="mdl-navigation__link mdl-color-text--grey-900 filter" href="" id="services"><i class="mdl-color-text--indigo-A700 material-icons"
+role="presentation">account_balance</i>Services</div>
+<div class="mdl-navigation__link mdl-color-text--grey-900 filter" href="" id="recreation"><i class="mdl-color-text--green-A700 material-icons"
+role="presentation">terrain</i>Recreation</div>
+<div class="mdl-navigation__link mdl-color-text--grey-900 filter" href="" id="weather"><i class="mdl-color-text--light-blue-A700 material-icons"
+role="presentation">cloud</i>Weather</div>
+<div class="mdl-navigation__link mdl-color-text--grey-900" href="" id="reset"><i class="mdl-color-text--grey-900 material-icons" role="presentation">refresh</i>Show All Maps</div>
+            <div class="mdl-layout-spacer">&nbsp;</div>
+            <!--ABout this Map Card-->
+            <div class="mdl-typography--text-center mdl-color--grey-100">
+              <button id="map-about--btn" type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary">
+                  <i class="material-icons">help</i>
+              </button>
+            </div>
+          </nav>
+        </div>
+        <main id="mm-content" class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-grid demo-content">
+  <div class="demo-updates mdl-card mdl-card--square mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet app services ">
+      <a href="/material-maps/maps/mapbox/">
+        <div class="mdl-card__title mdl-card--expand mdl-color--teal-300" style="background-image:url(/material-maps/assets/post-images/counties.jpg)">
+        </div>
+      </a>
+    <div class="mdl-card__actions">
+      <span class="mdl-card__title-text">Counties</span>
+    </div>
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+      A Mapbox GL Map
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a href="/material-maps/maps/mapbox/" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>
+    </div>
+  </div>
+  <div class="demo-updates mdl-card mdl-card--square mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet app weather ">
+      <a href="/material-maps/maps/weather-wms-4/">
+        <div class="mdl-card__title mdl-card--expand mdl-color--teal-300" style="background-image:url(/material-maps/assets/post-images/counties.jpg)">
+        </div>
+      </a>
+    <div class="mdl-card__actions">
+      <span class="mdl-card__title-text">WMS Layer</span>
+    </div>
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+      Weather WMS Layer from NOAA
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a href="/material-maps/maps/weather-wms-4/" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>
+    </div>
+  </div>
+  <div class="demo-updates mdl-card mdl-card--square mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet app weather ">
+      <a href="/material-maps/maps/weather-wms-3/">
+        <div class="mdl-card__title mdl-card--expand mdl-color--teal-300" style="background-image:url(/material-maps/assets/post-images/counties.jpg)">
+        </div>
+      </a>
+    <div class="mdl-card__actions">
+      <span class="mdl-card__title-text">WMS Layer</span>
+    </div>
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+      Weather WMS Layer from NOAA
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a href="/material-maps/maps/weather-wms-3/" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>
+    </div>
+  </div>
+  <div class="demo-updates mdl-card mdl-card--square mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet app weather ">
+      <a href="/material-maps/maps/weather-wms-2/">
+        <div class="mdl-card__title mdl-card--expand mdl-color--teal-300" style="background-image:url(/material-maps/assets/post-images/counties.jpg)">
+        </div>
+      </a>
+    <div class="mdl-card__actions">
+      <span class="mdl-card__title-text">WMS Layer</span>
+    </div>
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+      Weather WMS Layer from NOAA
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a href="/material-maps/maps/weather-wms-2/" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>
+    </div>
+  </div>
+  <div class="demo-updates mdl-card mdl-card--square mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet app weather ">
+      <a href="/material-maps/maps/weather-wms/">
+        <div class="mdl-card__title mdl-card--expand mdl-color--teal-300" style="background-image:url(/material-maps/assets/post-images/counties.jpg)">
+        </div>
+      </a>
+    <div class="mdl-card__actions">
+      <span class="mdl-card__title-text">WMS Layer</span>
+    </div>
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+      Weather WMS Layer from NOAA
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a href="/material-maps/maps/weather-wms/" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>
+    </div>
+  </div>
+  <div class="demo-updates mdl-card mdl-card--square mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet app weather ">
+      <a href="/material-maps/maps/weather-counties/">
+        <div class="mdl-card__title mdl-card--expand mdl-color--teal-300" style="background-image:url(/material-maps/assets/post-images/counties.jpg)">
+        </div>
+      </a>
+    <div class="mdl-card__actions">
+      <span class="mdl-card__title-text">Weather & Counties</span>
+    </div>
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+      this is a subtitle
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a href="/material-maps/maps/weather-counties/" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>
+    </div>
+  </div>
+  <div class="demo-updates mdl-card mdl-card--square mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet app services ">
+      <a href="/material-maps/maps/sidewalks/">
+        <div class="mdl-card__title mdl-card--expand mdl-color--teal-300" style="background-image:url(/material-maps/assets/post-images/counties.jpg)">
+        </div>
+      </a>
+    <div class="mdl-card__actions">
+      <span class="mdl-card__title-text">Sidewalks</span>
+    </div>
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+      OVRDC Sidewalks
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a href="/material-maps/maps/sidewalks/" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>
+    </div>
+  </div>
+  <div class="demo-updates mdl-card mdl-card--square mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet app recreation ">
+      <a href="/material-maps/maps/recreation-map/">
+        <div class="mdl-card__title mdl-card--expand mdl-color--teal-300" style="background-image:url(/material-maps/assets/post-images/counties.jpg)">
+        </div>
+      </a>
+    <div class="mdl-card__actions">
+      <span class="mdl-card__title-text">Recreation Map</span>
+    </div>
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+      this is a subtitle
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a href="/material-maps/maps/recreation-map/" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>
+    </div>
+  </div>
+  <div class="demo-updates mdl-card mdl-card--square mdl-shadow--2dp mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet app services ">
+      <a href="/material-maps/maps/material-demo2/">
+        <div class="mdl-card__title mdl-card--expand mdl-color--teal-300" style="background-image:url(/material-maps/assets/post-images/counties.jpg)">
+        </div>
+      </a>
+    <div class="mdl-card__actions">
+      <span class="mdl-card__title-text">Counties</span>
+    </div>
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+      A County Map
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a href="/material-maps/maps/material-demo2/" class="mdl-button mdl-js-button mdl-js-ripple-effect">View Map</a>
+    </div>
+  </div>
+</div>
+        </main>
+      </div>
+      <script src="/material-maps/assets/gallery-bundle.js"></script>
+    </body>
+</html>

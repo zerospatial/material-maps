@@ -1,0 +1,9 @@
+---
+---
+{% include vendor/material-dashboard/material.indigo-red.min.css %}
+{% include vendor/material-dashboard/styles.css %}
+{% include node_modules/leaflet/dist/leaflet.css %}
+{% include vendor/leaflet-fullscreen/Control.FullScreen.css %}
+{% include vendor/leaflet-search/leaflet-search.min.css %}
+{% include components/mm-styles.css %}
+{% include components/mm-styles-leaflet.css %}

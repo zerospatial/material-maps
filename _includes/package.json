@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "leaflet": "^1.2.0"
+    "leaflet": "^1.2.0",
+    "mapbox-gl": "^0.41.0",
+    "mapbox-gl-inspect": "^1.2.4",
+    "turf": "^3.0.14"
   }
 }

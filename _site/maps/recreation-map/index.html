@@ -1,0 +1,433 @@
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+      https://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Recreation Map</title>
+    <!-- Material Dashboard theme and fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Montserrat|Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <!--see https://getmdl.io/customize/ for many other color themes-->
+    <link rel="stylesheet" href="/material-maps/assets/map-styles-leaflet.css" />
+  </head>
+    <body>
+      <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+        <header id="mm-header" class="demo-header mdl-layout__header mdl-color--white mdl-color-text--grey-900">
+          <div class="mdl-layout__header-row">
+            <span id="navTitle" class="mdl-layout-title"><h5>Recreation Map</h5></span>
+            <!--div class="mdl-layout-spacer"></div-->
+            <div id="mm-header--menu">
+              <div id="mm-header--menu-horiz">
+                <button class="mdl-button mdl-js-button">
+                  <i class="material-icons">share</i>
+                </button>
+                <button class="mdl-button mdl-js-button">
+                  <i class="material-icons">print</i>
+                </button>
+                <button class="mdl-button mdl-js-button">
+                  <i class="material-icons">info</i>
+                </button>
+              </div>
+              <div id="mm-header--menu-vert" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+              <button id="vertbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon md__vert-button">
+                <i class="material-icons">more_vert</i>
+              </button>
+              <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right mdl-list" for="vertbtn">
+                <li class="mdl-list__item mdl-menu__item mdl-js-ripple-effect">
+                  <span class="mdl-list__item-primary-content mdl-color-text--black">
+                  <i class="material-icons mdl-list__item-icon mdl-color-text--black">share</i>
+                  Share
+                  </span>
+                </li>
+                <li class="mdl-list__item mdl-menu__item mdl-js-ripple-effect">
+                  <span class="mdl-list__item-primary-content">
+                  <i class="material-icons mdl-list__item-icon mdl-color-text--black">print</i>
+                  Print
+                </span>
+                </li>
+                <li class="mdl-list__item mdl-menu__item mdl-js-ripple-effect">
+                  <span class="mdl-list__item-primary-content">
+                  <i class="material-icons mdl-list__item-icon mdl-color-text--black">info</i>
+                  About
+                </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+        <!--div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50"-->
+        <div id="mm-sidebar--wrapper" class="demo-drawer mdl-layout__drawer mdl-color--grey-100 mdl-color-text--grey-900">
+          <header class="demo-drawer-header">
+            <div id="map-sidebar--title"><h4>Recreation Map</h4></div>
+            <div class="demo-avatar-dropdown">
+              <span class="mdl-color-text--grey-600">
+                <!--i class="mdl-color-text--indigo-A500 material-icons"
+                role="presentation">reply</i-->
+                <a class="mdl-color-text--indigo-A500" href="/material-maps">
+                  <button class="mdl-button mdl-js-button mdl-color-text--grey-600">
+                  <i class="material-icons">arrow_back</i> Return to Map Gallery
+                  </button>
+                </a>
+              </span>
+              <div class="mdl-layout-spacer"></div>
+              <!--button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                <i class="material-icons" role="presentation">arrow_drop_down</i>
+                <span class="visuallyhidden">Accounts</span>
+              </button>
+              <ul id="map-sidebar--link-menu" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+                <a href="/material-maps/" class="mdl-menu__item mdl-js-ripple-effect"><li>Gallery</li></a>
+                <a href="/material-maps/" class="mdl-menu__item mdl-js-ripple-effect"><li>Gallery</li></a>
+                <a href="/material-maps/" class="mdl-menu__item mdl-js-ripple-effect"><li>Gallery</li></a>
+              </ul-->
+            </div>
+          </header>
+          <div class="mdl-color-text--primary mdl-typography--text-center">
+          </div>
+          <nav id="sidebar" class="demo-navigation mdl-navigation mdl-color--white mdl-color-text--grey-900">
+            <!--form action="#">
+  <label class="mdl-button mdl-js-button mdl-button--icon" for="map-controls--search-input" data-upgraded=",MaterialButton">
+    <i class="material-icons">search</i>
+  </label>
+  <div class="mdl-textfield mdl-js-textfield" style="width:80%;">
+    <input id="" class="mdl-textfield__input" type="text" id="sample1">
+    <label class="mdl-textfield__label" for="sample1">Search Layers...</label>
+  </div>
+</form-->
+<div id="mapSearchControl" style="display:none;">
+    <i class="material-icons" style='float:left;line-height:44px;padding-left:14px;'>search</i>
+</div>
+<div aria-expanded="false">
+  <i class="material-icons mm-reveal--icon">keyboard_arrow_right</i>
+  <button class="mm-reveal--title mdl-button mdl-js-button mdl-button--primary mdl-typography--text-uppercase" value="0">Basemaps</button>
+  <div id="basemapSwitcher" class="mm-reveal mm-reveal--list" style="height:0;">
+    <!--label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="streets">
+      <input type="radio" id="streets" class="mdl-radio__button" name="options" value="1" >
+      <span class="mdl-radio__label">Streets</span>
+    </label>
+    <br />
+    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="contrast">
+      <input type="radio" id="contrast" class="mdl-radio__button" name="options" value="2" checked>
+      <span class="mdl-radio__label">Contrast</span>
+    </label-->
+    <!--table id="basemapTable" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable" style="width:100%;font-size:16px;">
+      <thead>
+        <tr>
+          <th class="mdl-data-table__cell--non-numeric">Select All</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Streets</td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Ortho</td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Gray</td>
+        </tr>
+      </tbody>
+    </table-->
+  </div>
+</div>
+<div aria-expanded="false">
+  <i class="material-icons mm-reveal--icon">keyboard_arrow_right</i>
+  <button id="test" class="mm-reveal--title mdl-button mdl-js-button mdl-button--primary mdl-typography--text-uppercase" value="0"  style="border-top:none;">Layers</button>
+  <div id="mapLayerSwitcher" class="mm-reveal mm-reveal--list" style="height:0;">
+    <!--label id ="checkall" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-0">
+      <input type="checkbox" id="checkbox-0" class="mdl-checkbox__input">
+      <span class="mdl-checkbox__label md-small-caps">Select All</span>
+    </label-->
+  </div>
+</div>
+<div id="mapLayerInfoWrapper" class="mdl-typography--text-uppercase mdl-typography--text-center" style="display:none;">
+  <div class="mdl-card mdl-shadow--2dp" style="max-width: calc(100% - 20px);
+    margin:10px;">
+    <div class="mdl-card__title">
+      <h5>Layer Info</h5>
+    </div>
+    <div id="mapLayerInfo" class="mdl-card__supporting-text">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Mauris sagittis pellentesque lacus eleifend lacinia...
+    </div>
+    <!--div class="mdl-card__actions mdl-card--border">
+      <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+        Get Started
+      </a>
+    </div-->
+    <div class="mdl-card__menu">
+      <button id="maplayerInfoClose" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+  </div>
+</div>
+<!--a class="mdl-navigation__link" href=""><i class="mdl-color-text--grey-900 material-icons" role="presentation">forum</i>Forums</div>
+<div class="mdl-navigation__link" href=""><i class="mdl-color-text--grey-900 material-icons" role="presentation">flag</i>Updates</div>
+<div class="mdl-navigation__link" href=""><i class="mdl-color-text--grey-900 material-icons" role="presentation">local_offer</i>Promos</div>
+<div class="mdl-navigation__link" href=""><i class="mdl-color-text--grey-900 material-icons" role="presentation">shopping_cart</i>Purchases</div>
+<div class="mdl-navigation__link" href=""><i class="mdl-color-text--grey-900 material-icons" role="presentation">people</i>Social</div-->
+            <div class="mdl-layout-spacer">&nbsp;</div>
+            <!--ABout this Map Card-->
+            <div class="mdl-typography--text-center mdl-color--grey-100">
+              <button id="map-about--btn" type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary">
+                  <i class="material-icons">help</i>
+              </button>
+            </div>
+          </nav>
+        </div>
+        <main id="mm-content" class="mdl-layout__content mdl-color--grey-100">
+          <div id="map"></div>
+        </main>
+      </div>
+      <script src="/material-maps/assets/map-bundle-leaflet.js"></script>
+      <script>/* move to layout??*/
+$(function() {
+  /*
+* Custom map layer control
+*/
+window.mapBasemaps = []
+window.mapLayers = [];
+/*
+* add radio option??
+*/
+function addMapLayersToggle(id, layer, name, on) {
+	var label = document.createElement('label');
+	var input = document.createElement('input');
+	input.id = layer;
+	input.type = 'checkbox';
+	input.className = 'mdl-checkbox__input';
+	var span = document.createElement('span');
+	var spanText = document.createTextNode(name);
+	span.appendChild(spanText);
+	span.className = 'mdl-checkbox__label';
+	label.appendChild(span);
+	label.appendChild(input);
+	label.className = 'mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect check';
+	label.for = layer;
+	label.id = layer + 'label';
+	componentHandler.upgradeElement(label);
+	document.getElementById(id).appendChild(label);
+	if (on === true ) {document.getElementById(layer + 'label').MaterialCheckbox.check();}
+}
+function addMapBasemapsToggle(id, layer, name, on,val) {
+  var div = document.createElement('div');
+	var label = document.createElement('label');
+	var input = document.createElement('input');
+	input.id = layer;
+	input.type = 'radio';
+	input.className = 'mdl-radio__button';
+  input.name = "options";
+  input.value = val;
+  //if (on === true ) {    input.attr = checked;  }
+	var span = document.createElement('span');
+	var spanText = document.createTextNode(name);
+	span.appendChild(spanText);
+	span.className = 'mdl-checkbox__label';
+	label.appendChild(input);
+  label.appendChild(span);
+  label.id = layer + 'label';
+  label.className = 'mdl-radio mdl-js-radio mdl-js-ripple-effect';
+  label.for = layer;
+	componentHandler.upgradeElement(label);
+  div.appendChild(label);
+	document.getElementById(id).appendChild(div);
+  if (on === true ) {document.getElementById(layer + 'label').MaterialRadio.check();}
+}
+  window.map;
+$("#mapLayerSwitcher").on('change', '.mdl-checkbox', function(e) {
+	var layer = e.target.id;
+	/*console.log($(e));*/
+	if (layer != 'checkbox-0') {
+		!map.hasLayer(mapLayers[layer])
+		? map.addLayer(mapLayers[layer])
+		: map.removeLayer(mapLayers[layer])
+	}
+});
+/*
+* Check all checkboxes code
+*/
+/*
+$("#checkall input").change(function() {
+		var listaElementos = document.querySelectorAll('.check');
+		for(var i=0, n=listaElementos.length; i<n; i++){
+			var element = listaElementos[i];
+			if($('#checkall input').is(":checked")) {
+				element.MaterialCheckbox.check();
+	  	}
+		  else {
+				element.MaterialCheckbox.uncheck();
+		  }
+		}
+	});
+	$('.check').change(function(){
+		var listaElementos = document.querySelectorAll('.check');
+		for(var i=0, n=listaElementos.length; i<n; i++){
+			var element = listaElementos[i];
+			if($('.check input:checked').length == $('.check input').length ) {
+				document.querySelector('#checkall').MaterialCheckbox.check();
+			}else{
+				document.querySelector('#checkall').MaterialCheckbox.uncheck();
+			}
+		}
+	});*/
+function layerSwitcher(e) {
+  console.log($(e))
+}
+var searchControl;
+map = new L.map('map', {
+  center: [39, -83.4],
+  zoom: 14,
+  fullscreenControl: true,
+  fullscreenControlOptions: {
+    position: 'topright'
+  }
+});
+map.on('resize', function () {
+  map.invalidateSize();
+	console.log('resized')
+});
+L.hash(map);
+map.createPane('tilepane');
+map.getPane('tilepane').style.zindex = 190;
+var basemaps = []
+basemaps["streets"] = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+});
+basemaps["contrast"] = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	subdomains: 'abcd',
+	minZoom: 0,
+	maxZoom: 20,
+	ext: 'png'
+});
+//alert(false);
+var currentBasemap = "contrast";
+basemaps[currentBasemap].addTo(map);
+var n = 1;
+for (b in basemaps) {
+  console.log(b, "contrast");
+  var st = b.toString();
+  addMapBasemapsToggle("basemapSwitcher",b, b.toUpperCase(),false,n);
+  n = n+1
+}
+document.getElementById(currentBasemap + 'label').MaterialRadio.check();
+//layerControl.addBaseLayer(basemaps["streets"], "Streets");
+//layerControl.addBaseLayer(basemaps["contrast"], "Contrast");
+$(".mdl-radio").change(function() {
+  basemapSwitch(this);
+});
+function basemapSwitch(e) {
+  /*console.log($(e));*/
+  if($(e).hasClass('is-checked')) {
+    var newBasemap = ($(e).children()[0].id).toString();
+    console.log(newBasemap);
+    console.log(currentBasemap);
+    if (currentBasemap != newBasemap) {
+      map.removeLayer(basemaps[currentBasemap]);
+      map.addLayer(basemaps[newBasemap]);
+      currentBasemap = newBasemap;
+    }
+  }
+}
+addMapLayersToggle("mapLayerSwitcher", "Counties", "Counties", true);
+componentHandler.upgradeAllRegistered();
+/*Counties*/
+var CountiesId = 0;
+var CountiesStyle = {
+  color: "red",
+  fillColor: "red",
+  weight: 1
+};
+function showPopupCard(props) {
+  var popup = "";
+  for (var k in props) {
+    var v = String(props[k]);
+    popup += '<strong>' + k + '</strong><br>' + v + '<br>' + '<hr style="margin:5px 0px;">';
+  };
+  document.getElementById("mapLayerInfoWrapper").style.display = 'block';
+  document.getElementById("mapLayerInfo").innerHTML = popup;
+}
+/* add normal leaflet layer*/
+mapLayers["Counties"] = new L.geoJson(null, {
+  style: CountiesStyle,
+  onEachFeature: function(feature, shape) {
+    shape.bindPopup(feature.properties["NAME"] + '<br />'+feature.properties["POPULATION"] + '<br />');
+    shape.bindTooltip(feature.properties["NAME"] + '<br />'+feature.properties["POPULATION"] + '<br />', {
+      sticky: true
+    });
+  }
+}).addTo(map);
+var CountiesData = omnivore.topojson('../../assets/data/counties.topojson', null, mapLayers["Counties"]);
+CountiesData.on('ready', function() {
+  searchAndFit();
+})
+/*end vector grid if statement*/
+var clickedFeature = new L.GeoJSON(null, {
+  style: {
+    color:'goldenrod',
+    fillColor: 'transparent',
+    weight: 4,
+    interactive: false
+  },
+  onEachFeature: function(feature, layer) {
+    var props = layer.feature.properties;
+    showPopupCard(props)
+  }
+}).addTo(map);
+function searchAndFit() {
+  map.fitBounds(CountiesData.getBounds());
+	document.getElementById('mapSearchControl').style.display = 'block';
+  var prop = 'Search ' + 'Counties';
+  searchControl = new L.Control.Search({
+    /*can only search one layer or layer group at a time*/
+    layer: CountiesData,
+    propertyName: "NAME",
+    container: "mapSearchControl",
+    textPlaceholder: prop,
+    marker: false,
+    autoType: false,
+    autoCollapse: false,
+    minLength: 2,
+    zoom:null,
+    collapsed: false,
+    add: false
+  }).addTo(map);
+  searchControl.on("search:locationfound", function(e) {
+    console.log(e);
+    clickedFeature.addData(e.layer.feature);
+		map.flyToBounds(e.layer.getBounds());
+    searchControl.collapse()
+  });
+  $("#searchtext" + prop.length).on('input',function() {
+    $('.search-tooltip').width($('.search-tooltip').parent().width());
+  });
+}
+ /*end for loop layers */
+/* end if layer statement*/
+/*page.search*/
+$("#sidebar").on('click', "#maplayerInfoClose", function() {
+  document.getElementById("mapLayerInfoWrapper").style.display = 'none';
+  clickedFeature.clearLayers();
+});
+map.on('click', function() {
+  clickedFeature.clearLayers();
+});
+});
+</script>
+    </body>
+</html>

@@ -1,0 +1,8 @@
+---
+---
+{% include vendor/material-dashboard/material.indigo-red.min.css %}
+{% include vendor/material-dashboard/styles.css %}
+{% include node_modules/mapbox-gl/dist/mapbox-gl.css %}
+{% include node_modules/mapbox-gl-inspect/dist/mapbox-gl-inspect.css %}
+{% include components/mm-styles.css %}
+{% include components/mm-styles-mapbox.css %}

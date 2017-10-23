@@ -1,0 +1,83 @@
+/*
+* Control FUllscreen mimic material
+*/
+
+.leaflet-control-zoom,
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  border: none!important;
+}
+.leaflet-control-zoom a:hover {
+  border-bottom:none;
+  background-color: lightgray;
+}
+.leaflet-control-zoom a {
+/*  border: none;
+  border-radius: 20px!important;*/
+  margin-bottom: 8px;
+  width:40px!important;
+  height:40px!important;
+  line-height: 40px!important;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.leaflet-control-search .search-tip {
+  background: #f5f5f5;
+  border-radius: 0;
+}
+.leaflet-control-search .search-tooltip  {
+  background-color: white;
+  box-shadow: 0px 2px 6px rgba(0,0,0,.4);
+  max-height:600px;;
+}
+.leaflet-control-search .search-cancel {
+  height: 20px;
+  position: relative;
+  right: 0px;
+  margin-top: 10px;
+  filter: alpha(opacity=80);
+  float: right;
+}
+.leaflet-control-search .search-input {
+  display: block;
+  border: none;
+  border-radius: 0;
+  height: 26px;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+.leaflet-top.leaflet-left {
+  max-width: 75%;
+  left: 4px;
+}
+.leaflet-control-container .leaflet-control-search .search-tooltip,
+.leaflet-container .leaflet-control-search {
+  border-radius: 0;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+  background: white;
+  background-color: white;
+  max-width:100%;
+}
+.leaflet-control-container .leaflet-control-search .search-input {
+  max-width: 85%!important;
+  font-family: Roboto, sans-serif;
+}
+.leaflet-control-container .leaflet-control-search .search-tooltip {
+  max-width: 100%;
+  background: white;
+  background-color: white;
+}
+.leaflet-control-container .leaflet-control-search .search-tip {
+  background: white;
+  font-family: Roboto, sans-serif;
+}
+.leaflet-pane img {
+  vertical-align: inherit;
+}
+@media screen and (max-width: 479px) {
+  .leaflet-top.leaflet-left,
+  .leaflet-control-search.search-exp.leaflet-control {
+    width: 100%;
+  }
+}

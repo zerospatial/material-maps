@@ -26,6 +26,7 @@ defaults:
       image: counties.jpg
       center: "[39, -83.4]"
       zoom: 14
+      api: leaflet
 
 # Prose.io Config File
 prose:
