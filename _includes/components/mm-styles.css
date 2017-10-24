@@ -45,6 +45,7 @@ input:-ms-input-placeholder {
 @media screen and (min-width: 600px) {
   #mm-header--menu-horiz {
     display: block;
+    margin-right:6px;
   }
   #mm-header--menu-vert {
     display: none;
