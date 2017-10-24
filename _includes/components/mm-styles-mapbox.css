@@ -23,9 +23,6 @@ h5, h6 {
 .mdl-spinner__circle {
   border-width: 9px;
 }
-#mm-header--menu-horiz .mdl-button {
-  min-width: auto;
-}
 {% if page.theme == 'light' %}hr {border-top: 2px solid rgba(0,0,0,.1);}
 {% else %}hr {border-top: 2px solid rgba(0,0,0,.1);}{% endif %}
 
