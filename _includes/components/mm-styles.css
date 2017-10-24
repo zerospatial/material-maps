@@ -42,6 +42,9 @@ input:-ms-input-placeholder {
   min-width: 20px;
   padding: 0 10px;
 }
+/*#mm-header--menu-horiz .mdl-button {
+  min-width: auto;
+}*/
 @media screen and (min-width: 600px) {
   #mm-header--menu-horiz {
     display: block;
