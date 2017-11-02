@@ -98,7 +98,8 @@ layout: compress
                   </button>
                 </a>
               </span>
-              {% else %}<br />{% endif %}
+              {% else %}<br />
+              {% endif %}
               <div class="mdl-layout-spacer"></div>
               <!--button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                 <i class="material-icons" role="presentation">arrow_drop_down</i>
@@ -175,22 +176,30 @@ layout: compress
       <script>{% include elements/mm-map.js %}</script>
       {% endif %}
       <script>
-      $(".mm-modal").on('click', '.mm-modal--close', function() {
-        $(".mm-modal").fadeOut();;
-      });
-      $("#aboutbtn1").click(function() {
-        $(".mm-modal").fadeIn();
-      });
-      $(".map-layer--info-close").click(function() {
-        $("#mm-info-box").fadeOut();
-      });
-      {% if page.modal.show == true %}
-      var modalshown = localStorage.getItem('modalshown');
-      if (modalshown == null) {
-        localStorage.setItem('modalshown', 1);
-        $(".mm-modal").fadeIn("slow");
-      }
-      {% endif %}
+      $(function() {
+        $(".mm-modal").on('click', '.mm-modal--close', function() {
+          $(".mm-modal").fadeOut();;
+        });
+        $("#aboutbtn1").click(function() {
+          $(".mm-modal").fadeIn();
+        });
+        $("#aboutbtn2").click(function() {
+          $(".mm-modal").fadeIn();
+        });
+        $("#map-about--btn").click(function() {
+          $(".mm-modal").fadeIn();
+        });
+        $(".map-layer--info-close").click(function() {
+          $("#mm-info-box").fadeOut();
+        });
+        {% if page.modal.show == true %}
+        var modalshown = localStorage.getItem('modalshown');
+        if (modalshown == null) {
+          localStorage.setItem('modalshown', 1);
+          $(".mm-modal").fadeIn("slow");
+        }
+        {% endif %}
+      })
       </script>
     </body>
 </html>

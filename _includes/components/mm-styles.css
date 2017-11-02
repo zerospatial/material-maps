@@ -289,6 +289,9 @@ input:focus, textarea:focus {
   -webkit-transform: none;
   -ms-transform: none;
 }
+.mm-modal .mdl-list__item {
+  padding:2px;
+}
 @media screen and (min-width:481px) {
   .mm-modal-inner {
     position: fixed;
