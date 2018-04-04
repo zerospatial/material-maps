@@ -1,0 +1,500 @@
+---
+layout: compress
+---
+{% if page.theme == 'light' %}
+{% assign background1 = "grey-100" %}
+{% assign background2 = 'white' %}
+{% assign primary = 'black' %}
+{% assign mdlcolors = "indigo-blue" %}
+{% else %}
+{% assign background1 = "blue-grey-900" %}
+{% assign background2 = 'blue-grey-800' %}
+{% assign primary = 'blue-grey-50' %}
+{% assign mdlcolors = "cyan-light_blue" %}
+{% endif %}
+<!DOCTYPE html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <title>{{page.title}}</title>
+  <meta name="description" content="{% if page.description %}{{page.description}}{% elsif page.subtitle%}{{page.subtitle}}{%endif%}">
+  <meta name="keywords" content="{% if page.tags %}{{ page.tags }}{% endif %}maps OVRDC Ohio Valley Regional Development Commission RTPO Transportation">
+  <meta name="author" content="OVRDC">
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <!--link rel="icon" sizes="192x192" href="images/android-desktop.png"-->
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <!--meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+  <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png"-->
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <!--meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+  <meta name="msapplication-TileColor" content="#3372DF"-->
+
+  <link rel="shortcut icon" href="{{ site.baseurl}}/assets/images/favicon.png">
+  {% include meta.html %}
+  <!--Material Design-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.{{mdlcolors}}.min.css" />
+  <link rel="stylesheet" href="{{site.baseurl}}/assets/material/mdl-dashboard-styles.css">
+  <!--Type of mapping API to use for the post used instead of page.style as in the map layout-->
+  {% if page.api %}{% for plugin in page.api %}{% assign name = plugin %}{% include map-plugins.html %}{% endfor %}{% endif %}
+  <!--map plugins-->
+  {% if page.plugins %}{% for plugin in page.plugins %}{% assign name = plugin %}{% include map-plugins.html %}{% endfor %}{% endif %}
+  <!--end plugins-->
+  {% if page.api == "mapboxgl" %}<script>mapboxgl.accessToken = '{{site.mapbox-mapboxgl-id}}'</script>{%endif%}
+  <link href='{{site.baseurl}}/assets/material/ovrdc-mapbox-mdl-dashboard-styles.css' rel='stylesheet' />
+  <link href='{{site.baseurl}}/assets/mapboxgl/openmaptiles/fa-cc.css' rel='stylesheet' />
+</head>
+<style>{% if page.css %}{{ page.css }}{% endif %}
+</style>
+<body>
+<!--Start Post Content-->
+{% if page.no-template == true %}
+{{ content }}
+{% else %}
+<!--div class="demo-layout-transparent mdl-layout mdl-js-layout">
+  <header class="mdl-layout__header mdl-layout__header--transparent">
+    <div class="mdl-layout__header-row">
+      <span class="mdl-layout-title">Vehicle Accident Statistics 2013-2015</span>
+      <div class="mdl-layout-spacer"></div>
+      <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+        <i class="material-icons">more_vert</i>
+      </button>
+      <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+        <li class="mdl-menu__item">About</li>
+        <li class="mdl-menu__item">Contact</li>
+        <li class="mdl-menu__item">Legal information</li>
+      </ul>
+    </div>
+  </header-->
+<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+  <div class="demo-drawer mdl-layout__drawer mdl-color--{{background1}} mdl-color-text--{{primary}}">
+    <header class="demo-drawer-header">
+      <div id="map-title"><h4>{{page.title}}</h4></div>
+      <div class="demo-avatar-dropdown">
+        <span class="mdl-color-text--grey-600">OVRDC Web Links</span>
+        <div class="mdl-layout-spacer"></div>
+        <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+          <i class="material-icons" role="presentation">arrow_drop_down</i>
+          <span class="visuallyhidden">Accounts</span>
+        </button>
+        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+          <li class="mdl-menu__item"><a href="/">OVRDC Homepage</a></li>
+          <li class="mdl-menu__item"><a href="/gis/maps">OVRDC Map Gallery</a></li>
+        </ul>
+      </div>
+    </header>
+    <div style="height:2px;">
+      <div id="map-line--loading" class="mdl-progress mdl-js-progress mdl-progress__indeterminate" style="height:2px;display:none;"></div>
+    </div>
+    <nav class="demo-navigation mdl-navigation mdl-color--{{background2}}">
+      <!--a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a-->
+      <div id="map-controls">
+        {% if page.plugins contains "jsonsearch" %}
+        {% if page.search-title %}
+        <h6 class="mdl-color-text--primary mdl-typography--text-center mdl-typography--text-uppercase">{{page.search-title}}</h6>
+        {% endif %}
+        <form action="#" id="map-controls--search">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+            <label class="mdl-button mdl-js-button mdl-button--icon" for="map-controls--search-input">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <input class="mdl-textfield__input" type="search" id="map-controls--search-input">
+              <label class="mdl-textfield__label" for="map-controls--search-input">Expandable Input</label>
+            </div>
+          </div>
+        </form>
+        <ul id="map-controls--search-results">
+        </ul>
+        <div class="mdl-layout-spacer">&nbsp;</div>
+        {% endif %}
+        <div id="map-controls--filters">
+          {% if page.toggles %}
+          {% for toggle in page.toggles limit: 1%}
+          <h6 class="mdl-color-text--primary mdl-typography--text-center mdl-typography--text-uppercase">{{toggle.title}}</h6>
+          {%endfor%}
+          <ul>
+            {% for toggle in page.toggles offset: 1%}
+            <li>
+              <label id="{{toggle.id}}" class="mdl-card--border mdl-switch mdl-js-switch mdl-js-ripple-effect" for="{{toggle.id}}checkbox">
+                <input type="checkbox" id="{{toggle.id}}checkbox" class="mdl-switch__input" {%if toggle.checked == true %}checked{% endif %} {% if toggle.disabled == true%}disabled{%endif%}>
+                <span class="mdl-switch__label">{{toggle.label}}</span>
+              </label>
+            </li>
+            {% endfor %}
+            <li>
+              <hr />
+            </li>
+          </ul>
+          {% endif %}
+          <div id="map-controls--data"></div>
+          {% if page.filters %}
+          <h6 class="mdl-color-text--primary mdl-typography--text-center mdl-typography--text-uppercase">{{page.filters[0].title}}</h6>
+          <ul>
+            {% for filter in page.filters %}
+            {% if forloop.first %}{% else %}
+            {% if page.filters[0].type == "radio" %}
+            <li>
+              <label id="{% if filter.field %}{{filter.field}}{%endif%}{% if filter.layer%}{{filter.layer}}{%endif%}_label" class="map-controls--filters-toggle mdl-radio mdl-js-radio mdl-js-ripple-effect" for="{% if filter.field %}{{filter.field}}{%endif%}{% if filter.layer%}{{filter.layer}}{%endif%}">
+                <input type="radio" id="{% if filter.field %}{{filter.field}}{%endif%}{% if filter.layer%}{{filter.layer}}{%endif%}" class="mdl-radio__button" name="filters" {%if filter.checked == true %}checked{% endif %} {% if filter.disabled == true%}disabled{%endif%}>
+                <span class="mdl-radio__label">{{filter.name}}</span>
+              </label>
+            </li>
+            {% else %}
+            <li>
+              <label id="{% if filter.field %}{{filter.field}}{%endif%}{% if filter.layer%}{{filter.layer}}{%endif%}_label" class="map-controls--filters-toggle mdl-switch mdl-js-switch mdl-js-ripple-effect" for="{% if filter.field %}{{filter.field}}{%endif%}{% if filter.layer%}{{filter.layer}}{%endif%}">
+                <input type="checkbox" id="{% if filter.field %}{{filter.field}}{%endif%}{% if filter.layer%}{{filter.layer}}{%endif%}" class="mdl-switch__input" value="1" {%if filter.checked == true %}checked{% endif %} {% if filter.disabled == true%}disabled{%endif%}>
+                <span class="mdl-switch__label">{{filter.name}}</span>
+              </label>
+            </li>
+          {% endif %}{% endif %}{% endfor %}
+          </ul>
+          <div class="mdl-layout-spacer"></div>
+          {% if page.slider %}
+          <div id="map-controls--slider-title" class="map-control-title mdl-color-text--primary mdl-typography--text-uppercase mdl-typography--text-center">{{page.slider[0].title}}</div>
+          <input id="map-controls--slider" class="mdl-slider mdl-js-slider" type="range" min="0" max="100" value="{{page.slider[0].value}}" tabindex="0">
+          <div id="map-controls--slider-tooltip" class="mdl-tooltip" data-mdl-for="map-controls--slider">{{page.slider[0].tooltip}}</div>
+          {% endif %}
+          {% if page.slide2 %}
+          <div class="mdl-layout-spacer">&nbsp;</div>div id="map-controls--slider2"></div>{% endif %}
+          {% if page.extrude == true %}
+          <div class="mdl-layout-spacer">&nbsp;</div>
+          <div>
+            <ul>
+              <li>
+                <label class="map-controls--3dswitch mdl-switch mdl-js-switch mdl-js-ripple-effect" for="height-toggle-switch">
+                  <input type="checkbox" id="height-toggle-switch" class="mdl-switch__input">
+                  <span class="mdl-switch__label">Toggle 3D</span>
+                </label>
+              </li>
+            </ul>
+          </div>
+          {% endif %}
+          {% if page.reset != false %}<!-- Contact Chip -->
+          <div class="mdl-layout-spacer">&nbsp;</div>
+          <hr />
+          <div class="mdl-typography--text-center">
+            <button id="map-controls--reset" type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary">
+                <span>Reset Map</span>
+            </button>
+            <span class="mdl-tooltip" data-mdl-for="map-controls--reset">Resets the map to the original extent and turns on/off the default layers/filters.</span>
+          </div>
+          {% endif %}
+        {% endif %}
+        </div><!--end map filters-->
+        {% if page.story == true %}
+        <div class="mdl-layout-spacer">&nbsp;</div>
+        <!-- Button Chip -->
+        <div style="padding: 0 10px;">
+          <button style="width:100%;cursor:pointer;" id="map-controls--story" type="button" class="mdl-chip">
+            <span id="map-controls--story-play-icon" class="mdl-chip__action">
+              <i class="material-icons">play_circle_filled</i>&nbsp;
+            </span>
+            <span id="map-controls--story-play-text" class="mdl-chip__text">Play Story</span>
+          </button>
+        </div>
+        {% endif %}
+        {% if page.legend %}
+        <div class="mdl-layout-spacer">&nbsp;</div>
+        <div id="demo-drawer--map-legend">
+          <h6 class="map-legend--title mdl-color-text--primary mdl-typography--text-center mdl-typography--text-uppercase">{{page.legend[0].title}}</h6>
+          <div id="map-legend--content" class="mdl-typography--text-center mdl-color-text--grey-600"></div>
+          <!--div class="mdl-card__actions"></div-->
+        </div>
+        {% endif %}
+      </div>
+      <div class="mdl-layout-spacer">&nbsp;</div>
+      <!-- picture button-->
+
+      <!--ABout this Map Card-->
+      <div class="map-drawer--footer">
+        <div class="mdl-typography--text-center mdl-color--{{background1}}">
+          <a type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary" href="https://docs.google.com/forms/d/e/1FAIpQLSd53cAsweLYkkr75KUpN6lHpsQcKbV9XoRNtJEsFsUHdVIVuw/viewform?entry.1286129613&entry.2022340261&entry.519867356={{site.baseurl}}{{page.url}}" target="_blank"><i class="material-icons">message</i></a>
+          </a>
+          <button id="map-image-btn" type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary">
+              <i class="material-icons">wallpaper</i>
+          </button>
+          <button id="map-share-btn" type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary">
+              <i class="material-icons">share</i>
+          </button>
+          <button id="map-about-btn" type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary">
+              <i class="material-icons">info_outline</i>
+          </button>
+        </div>
+      </div>
+      <!-- Square Card Hidden-->
+      <div id="map-about--card" class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__menu">
+          <button class="map-about--card-close mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect mdl-button--colored">
+            <i class="material-icons">close</i>
+          </button>
+        </div>
+        <!--div class="mdl-card__title mdl-card--expand">
+
+        </div-->
+        <div class="mdl-card__supporting-text">
+        <h1 class="mdl-card__title-text">About this Map</h1><br />
+          <div id="map-about--txt">{{ page.about }}</div>
+        </div>
+        <div class="map-about--card-close mdl-card__actions mdl-card--border">
+          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            Close
+          </a>
+        </div>
+      </div>
+      <!--a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a-->
+    </nav>
+  </div>
+  {% if page.layer-info %}
+  <div id="map-layer--info-box" class="mdl-cell mdl-card mdl-shadow--3dp">
+    <div class="mdl-card__title">
+       <span class="mdl-card__title-text">{{ page.layer-info[0].title }}</span>
+    </div>
+    <div id="map-layer--info-txt" class="mdl-card__supporting-text mdl-typography--font-light mdl-typography--subhead"></div>
+    <div id="map-layer--info-footer" class="mdl-card__actions mdl-card--border" style="display:none;">
+    </div>
+    <div class="mdl-card__menu">
+      <button id="card01close" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+  </div>
+  {% endif %}
+  <main id="mdl_main" class="mdl-layout__content mdl-color--grey-100">
+    <!--div class="mdl-grid demo-content"></div-->
+    <div>
+      <div id="map-snackbar" class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+      </div>
+    </div>
+    <div id="map">
+      <div id="map-loading">
+        <div class="mdl-spinner mdl-js-spinner is-active"></div>
+      </div>
+      <!--move to map script?-->
+      {% if page.baselayers != false %}
+      <div id="map-baselayers--container">
+        <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="map-baselayers">
+          <i class="material-icons">layers</i>
+        </button>
+        <ul id="map-baselayers--menu" class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="map-baselayers">
+          <li id="osm-bright" class="baselayer mdl-menu__item">Streets Basic</li>
+          <li id="positron" class="baselayer mdl-menu__item">Streets Light</li>
+          <li id="dark-matter" class="baselayer mdl-menu__item">Streets Dark</li>
+          <li id="mapbox-satellite-streets" class="baselayer mdl-menu__item">Satellite</li>
+        </ul>
+      </div>
+      {% endif %}
+      <!-- Attribution move to an include? -->
+      <!--div id="attribution-container">
+        <span id="attribution" class="mdl-tooltip--left"><a href="http://www.ovrdc.org/gis/">© OVRDC</a>&nbsp;<a href="http://www.openstreetmap.org/about/" target="_blank">© OpenStreetMap</a>{% if page.attribution %}&nbsp;{{page.attribution}}{%endif%} | Powered by <a href="https://www.mapbox.com/mapbox-gl-js/api/" target="_blank">Mapbox GL</a></span>
+        <button id="attribution-button" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-js-ripple-effect">
+          <i class="material-icons">info</i>
+        </button>
+      </div-->
+      <!-- end attribution-->
+      <div id="map-legend" class="mdl-color--{{background1}} mdl-color-text-{{primary}}" style="display:none;"></div>
+    </div>
+    <!--mapillary viewer-->
+    <div id="mly"></div>
+  </main>
+  <div id="map-about-modal" class="ovrdc-modal">
+    <div class="ovrdc-modal-inner">
+      <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title mdl-card--expand">
+          <h2 class="mdl-card__title-text">{{page.title}}</h2>
+        </div>
+        <div class="mdl-card__supporting-text">{{ page.about }}</div>
+        <div class="mdl-card__actions mdl-card--border">
+          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect ovrdc-modal--close">
+            Close
+          </a>
+        </div>
+        <div class="mdl-card__menu">
+          <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect ovrdc-modal--close">
+            <i class="material-icons">close</i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="map-image-modal" class="ovrdc-modal">
+    <div class="ovrdc-modal-inner">
+      <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+          <span id="map-image"></span>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <button id="map-image-href" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Download Placeholder</button>
+          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect ovrdc-modal--close" style="float:right;">
+            Close
+          </a>
+        </div>
+        <div class="mdl-card__menu">
+          <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect ovrdc-modal--close">
+            <i class="material-icons">close</i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="map-share-modal" class="ovrdc-modal">
+    <div class="ovrdc-modal-inner">
+      <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title mdl-card--expand">
+          <h2 class="mdl-card__title-text">Share this Map</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+          <div class="map-share-buttons">
+            <a href="//www.facebook.com/sharer.php?u={{site.baseurl | uri_escape}}{{page.url | uri_escape}}&amp;t={{page.title | uri_escape}}"
+            target="_blank" class="mdl-button mdl-js-button mdl-button--raised" style="background-color:#4867b4;">
+              facebook
+            </a>
+            <a class="mdl-button mdl-js-button mdl-button--raised"  style="background-color:#5db4f7;" href="//twitter.com/intent/tweet?status={{page.title | uri_escape}} {{site.baseurl | uri_escape}}{{page.url | uri_escape}}"
+            target="_blank">Twitter</a>
+            <a class="mdl-button mdl-js-button mdl-button--raised" style="background-color:#b50015;" href="//www.pinterest.com/pin/create/button/?url={{site.baseurl | uri_escape}}{{page.url | uri_escape}}&amp;media={{ site.baseurl }}/assets/post-images/large/{% if page.image %}{{ page.image }}{% else %}template.png{% endif %}&amp;description={{page.title}}"
+            target="_blank">Pinterest</a>
+          </div>
+          <div>
+            <h5>Embed Code</h5>
+            <form action="#">
+              <div class="mdl-textfield mdl-js-textfield map-share-embed" style="padding:0;border:1px solid rgba(0,0,0,.12);padding:10px;">
+                <input class="mdl-textfield__input" style="border-bottom:none;type="text" value="<iframe src='{{site.baseurl}}{{page.url}}' width='800px' height='600px' frameborder=none></iframe>" >
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect ovrdc-modal--close">
+            Close
+          </a>
+        </div>
+        <div class="mdl-card__menu">
+          <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect ovrdc-modal--close">
+            <i class="material-icons">close</i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% if page.template != false %}
+{% include mapboxgl/material-mapbox-map.html %}
+{% else %}
+{{content}}
+{% endif %}
+<script>
+var w = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+console.log(w);
+if (w < 1024) {
+  sidebar = false;
+  var showSidebar = setInterval(function() {
+    console.log('checking sidebar');
+    if ($(".mdl-layout__drawer").hasClass('is-visible') && sidebar == true) {
+      clearInterval(showSidebar)
+      return false
+    }else{
+      $(".mdl-layout__drawer-button").click();
+      sidebar = true;
+    }
+  }, 500)
+}
+/*$(".map-about--card-close").click(function() {
+  $("#map-about--card").toggle();
+  $(".ovrdc-modal").fadeOut();
+});*/
+$("#map-about-btn").click(function() {
+  //$("#map-about--card").fadeIn();
+  $("#map-about-modal").fadeIn();
+});
+$("#map-share-btn").click(function() {
+  //$("#map-about--card").fadeIn();
+  $("#map-share-modal").fadeIn();
+});
+$(function() {
+  var windowUrl = window.location.href;
+  var feedbackUrl =  + windowUrl;
+  $("#map-feeback--btn-link").html('<a href="https://docs.google.com/forms/d/e/1FAIpQLSd53cAsweLYkkr75KUpN6lHpsQcKbV9XoRNtJEsFsUHdVIVuw/viewform?entry.1286129613&entry.2022340261&entry.519867356=' + feedbackUrl + '" target="_blank"><i class="material-icons">feedback</i></a>');
+});
+{% if page.plugins contains "jsonsearch" %}
+$(".search-close").on('click', function() {
+  console.log('click');
+  $("#map-controls--search-input").html("")
+});
+{% endif %}
+</script>
+{% endif %}
+<!--End Post Content-->
+<script>
+$().ready(function() {
+  setTimeout(function() {
+    $("#map-loading").hide();
+  }, 100);
+  $(".ovrdc-modal").on('click', '.ovrdc-modal--close', function() {
+    $(".ovrdc-modal").fadeOut();
+  });
+  {% if page.showmodal == true %}
+  var modalshown = localStorage.getItem('modalshown');
+  if (modalshown == null) {
+    localStorage.setItem('modalshown', 1);
+    $("#map-about-modal").fadeIn();
+  }
+  {% endif%}
+
+  /* image save function */
+
+  $("#map-image-btn").click(function() {
+    var blobUrl = map.getCanvas().toDataURL();
+    var imgcard = $("#ovrdc-modal--map-info .mdl-card");
+    var background = "url('" + blobUrl +  "')";
+    $("#map-image").html('<img src="data:image/jpg;' + blobUrl + '" width="100%"></img>');
+    /*if (typeof map.getLayer('selected') != "undefined") {
+      var selfeature = map.queryRenderedFeatures({'layers':['selected']});
+      var imgname =  "map";
+      console.log(imgname)
+    }else{
+      var imgname = 'map';
+    }*/
+    var imgname = 'map';
+    $("#map-image-href").html('<a href="data:image/png;' + blobUrl + '" download="' + imgname + '.png"><i class="material-icons">file_download</i> Download Image</a>')
+    $("#map-image-modal").fadeIn();
+  });
+
+  /* end image save function */
+});
+</script>
+<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+<!--script src="https://code.getmdl.io/1.2.1/material.min.js"></script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
+<script src="{{site.baseurl}}/assets/cssjs/spin.js"></script>
+<script src="{{site.baseurl}}/assets/cssjs/jquery-spin/jquery-spin.js"></script>
+</body>
+{% include analytics.js %}
+</html>
