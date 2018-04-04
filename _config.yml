@@ -2,6 +2,8 @@ baseurl: /material-maps
 url: https://ovrdc.github.io
 title: Material Maps
 
+mapboxgl-id: pk.eyJ1IjoicmV5ZW10bSIsImEiOiJjamZsZHQ4Y3QwMHd3MzNvNGEwcWppaTR6In0.v-30ORurFzlA3HvyKbX4pA
+
 exclude: ["Gemfile", "Gemfile.lock"]
 
 #compress settings remove blank lines
