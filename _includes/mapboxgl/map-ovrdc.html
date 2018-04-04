@@ -1,0 +1,101 @@
+<script>
+{% include common/getQuery.js %}
+$("#map-line--loading").show();
+/*--------------------
+start mpabox gl
+--------------------*/
+/*
+* Global variables to store sources and layers
+*/
+var mglSources = {};
+var mglLayers = {};
+
+var debug = false;
+if (window.location.search.indexOf('debug=1') > -1) {
+  debug = true;
+  console.log('debuggin on')
+}
+
+var map, nav, view, firstBuild = 1;
+
+/*var dark = "{{site.baseurl}}/assets/mapboxgl/openmaptiles/dark-matter/style.json";
+var light = "{{site.baseurl}}/assets/mapboxgl/openmaptiles/positron/style.json";
+var streets = "{{site.baseurl}}/assets/mapboxgl/openmaptiles/osm-bright/style.json";*/
+var dark = "mapbox://styles/mapbox/dark-v9";
+var light = "mapbox://styles/mapbox/light-v9";
+var sreets = "mapbox://styles/mapbox/streets-v9";
+var ortho = "mapbox://styles/mapbox/satellite-streets-v10";
+if ( !feature.webGL || !mapboxgl.supported()) {
+    alert('Please upgrade to a modern browser. Your current browser does not support the advanced features of of this map. OVRDC recommends Chrome.');
+} else {
+  mapboxInit()
+}
+function mapboxInit() {
+
+  view = {
+    center:{% if page.center%}{{page.center}}{%else%}[-82.9307, 38.7876]{%endif%},
+    zoom:{% if page.zoom %}{{page.zoom}}{%else%}11{%endif%},
+    bearing:{% if page.bearing %}{{page.bearing}}{%else%}0{%endif%},
+    pitch:{% if page.pitch %}{{page.pitch}}{%else%}0{%endif%},
+    speed:{% if page.speed %}{{page.speed}}{%else%}0.5{%endif%},
+    curve:{% if page.curve%}{{page.curve}}{%else%}0.5{%endif%}
+  };
+
+  map = new mapboxgl.Map({
+      container: 'map',
+      style: {% if page.basemap%}{{page.basemap}}{% else %}dark{%endif%},
+      attributionControl: true,
+      center:{% if page.center%}{{page.center}}{%else%}[-82.9307, 38.7876]{%endif%},
+      zoom:{% if page.zoom %}{{page.zoom}}{%else%}11{%endif%},
+      bearing:{% if page.bearing %}{{page.bearing}}{%else%}0{%endif%},
+      pitch:{% if page.pitch %}{{page.pitch}}{%else%}0{%endif%},
+      speed:{% if page.speed %}{{page.speed}}{%else%}0.5{%endif%},
+      curve:{% if page.curve%}{{page.curve}}{%else%}0.5{%endif%},
+      //debug: true,
+      hash: {% if page.hash == true %}true{%else%}false{% endif %},
+      maxZoom: 16.9,
+      minZoom: {% if page.minzoo %}{{page.minzoom}}{% else %}7{% endif %},
+      maxBounds: [[-90.61, 28.63], [-70.89, 43.94]],
+      preserveDrawingBuffer: true
+  });
+  nav = new mapboxgl.NavigationControl({position: 'top-right'});
+  map.addControl(nav);
+  map.on('load', function () {
+    buildMap();
+    firstBuild = 0;
+  });
+}
+function buildMap() {
+
+  {{ content }}
+
+  /*need to build map after switching layers to get the overlays to show back up*/
+  map.on('style.load', function() {
+    if (debug == true) {console.log('style loaded')}
+    buildMap();
+  });
+}/*end buildMap function*/
+map.on('sourcedataloading', function(e) {
+  console.log('sourcedataloading');
+  var checkLoaded = setInterval(loaded, 50);
+  if (!$("#map-line--loading").is(':visible')) {
+    $("#map-line--loading").show();
+  };
+  function loaded() {
+    if (map.areTilesLoaded()) {
+      window.clearInterval(checkLoaded);
+      console.log('all initial tiles loaded')
+      $("#map-line--loading").hide();
+      map.off('sourcedataloading');
+      return false
+    }
+  }
+});
+
+{% include mapboxgl/baselayer-switcher.js %}
+
+/*--------------------
+end mapbox gl template
+--------------------*/
+{{ page.additional-code }}
+</script>
