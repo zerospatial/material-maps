@@ -1,0 +1,25 @@
+<!--meta content and open graph tags for social sharing see _includes/metal.html-->
+  <title>{{ page.title }} | OVRDC</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@ovrdc">
+  <meta name="twitter:creator" content="@ovrdc">
+  <meta name="twitter:title" content="{{ page.title }}">
+  <meta name="twitter:description" content="{% if page.description %}{{ page.description | strip_html}}{% elsif page.subtitle %}{{ page.subtitle | strip_html}}{% else %}{{site.description}}{% endif %}">
+  <meta name="twitter:domain" content="www.ovrdc.org" />
+  <meta name="twitter:image" content="{{ site.baseurl }}/assets/post-images/large/{% if page.image %}{{ page.image }}{% else %}template.png{% endif %}" />
+  <!--Open Graph meta data-->
+  <meta property="og:title" content="{{ page.title }}" />
+  <meta property="og:type" content="{% if page.layout == post or page.layout == 'slides' %}article{% else %}website{% endif %}" />
+  <meta property="og:site_name" content="{{ site.title }}" />
+  <meta property="og:image" content="{{ site.baseurl }}/assets/post-images/landscape/{% if page.image %}{{ page.image }}{% else %}template.png{% endif %}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="627" />
+  <meta property="og:image" content="{{ site.baseurl }}/assets/post-images/large/{% if page.image %}{{ page.image }}{% else %}template.png{% endif %}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="1200" />
+  <meta property="og:description" content="{% if page.description %}{{ page.description | strip_html}}{% elsif page.subtitle %}{{ page.subtitle | strip_html}}{% else %}{{site.description}}{% endif %}" />
+  <meta property="og:url" content="{{ site.baseurl }}{{ page.url }}" />
+  <!--end meta and open graph-->
