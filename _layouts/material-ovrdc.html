@@ -65,7 +65,7 @@ layout: compress
   <!--map plugins-->
   {% if page.plugins %}{% for plugin in page.plugins %}{% assign name = plugin %}{% include map-plugins.html %}{% endfor %}{% endif %}
   <!--end plugins-->
-  {% if page.api == "mapboxgl" %}<script>mapboxgl.accessToken = '{{site.mapbox-mapboxgl-id}}'</script>{%endif%}
+  {% if page.api == "mapboxgl" %}<script>mapboxgl.accessToken = '{{site.mapboxgl-id}}'</script>{%endif%}
   <link href='{{site.baseurl}}/assets/material/ovrdc-mapbox-mdl-dashboard-styles.css' rel='stylesheet' />
   <link href='{{site.baseurl}}/assets/mapboxgl/openmaptiles/fa-cc.css' rel='stylesheet' />
 </head>
@@ -491,10 +491,8 @@ $().ready(function() {
 });
 </script>
 <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-<!--script src="https://code.getmdl.io/1.2.1/material.min.js"></script-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
-<script src="{{site.baseurl}}/assets/cssjs/spin.js"></script>
-<script src="{{site.baseurl}}/assets/cssjs/jquery-spin/jquery-spin.js"></script>
+<!--script src="{{site.baseurl}}/assets/cssjs/spin.js"></script>
+<script src="{{site.baseurl}}/assets/cssjs/jquery-spin/jquery-spin.js"></script-->
 </body>
-{% include analytics.js %}
 </html>
